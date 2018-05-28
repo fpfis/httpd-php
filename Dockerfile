@@ -1,4 +1,4 @@
-FROM from php:5.6-fpm-alpine
+FROM php:5.6-fpm-alpine
 
 # ensure www-data user exists
 #RUN set -x \
@@ -137,7 +137,7 @@ RUN set -eux; \
 	apk add --virtual .httpd-rundeps $runDeps; \
 	apk del .build-deps
 
-COPY httpd-foreground /usr/local/bin/
+#COPY httpd-foreground /usr/local/bin/
 
 EXPOSE 80
 CMD ["httpd-foreground"]
