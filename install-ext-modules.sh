@@ -55,7 +55,7 @@ pecl install igbinary
 
 docker-php-ext-enable igbinary
 
-yes | pecl install memcached-2.2.0
+yes '' | pecl install memcached-2.2.0
 
 cd /tmp
 
