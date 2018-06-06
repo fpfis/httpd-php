@@ -51,14 +51,11 @@ apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS
 
 docker-php-source extract
 
-pecl install 
-
 pecl install igbinary
-
 
 docker-php-ext-enable igbinary
 
-yes | peck install memcached-2.2.0
+yes | pecl install memcached-2.2.0
 
 cd /tmp
 

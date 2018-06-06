@@ -1,6 +1,8 @@
 FROM php:5-fpm-alpine
 
-#WORKDIR /tmp
+# Install PHP Modules
+
+RUN curl https://raw.githubusercontent.com/fpfis/httpd-php/release/5.6/install-ext-modules.sh | /bin/sh
 
 ### Add httpd
 RUN apk add --no-cache apache2 apache2-utils 
