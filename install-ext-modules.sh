@@ -69,7 +69,7 @@ phpize;
 
 cd /;
 
-rm /tmp/*;
+rm -rf /tmp/*;
 
 docker-php-source delete;
 
