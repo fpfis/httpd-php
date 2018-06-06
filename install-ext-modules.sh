@@ -47,40 +47,36 @@ makedepends="
 	libmemcached-dev
 	"
 
-apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS
+apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS;
 
-docker-php-source extract
+docker-php-source extract;
 
-pecl install igbinary
+pecl install igbinary;
 
-docker-php-ext-enable igbinary
+docker-php-ext-enable igbinary;
 
-pecl install memcached-2.2.0
+echo '' | pecl install memcached-2.2.0;
 
-cd /tmp
+cd /tmp;
 
-pecl bundle redis
+pecl bundle redis;
 
-cd redis
+cd redis;
 
-phpize
+phpize;
 
-./configure --enable-redis-igbinary --enable-redis-lzf
+./configure --enable-redis-igbinary --enable-redis-lzf && make -j && make install;
 
-make -j
+cd /;
 
-make install
+rm /tmp/*;
 
-cd /
+docker-php-source delete;
 
-rm /tmp/*
+docker-php-ext-enable redis;
 
-docker-php-source delete
+docker-php-ext-install $modules;
 
-docker-php-ext-enable redis
-
-docker-php-ext-install $modules
-
-apk add --no-cache $( scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' )
+apk add --no-cache $( scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' );
 
 apk del .build-deps
