@@ -44,19 +44,46 @@ makedepends="
 	tidyhtml-dev
 	unixodbc-dev
 	zlib-dev
+	libmemcached-dev
 	"
 
 apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS
 
 docker-php-source extract
 
+pecl install 
+
 pecl install igbinary
+
 
 docker-php-ext-enable igbinary
 
+yes | peck install memcached-2.2.0
 
+cd /tmp
+
+pecl bundle redis
+
+cd redis
+
+phpize
+
+./configure --enable-redis-igbinary --enable-redis-lzf
+
+make -j
+
+make install
+
+cd /
+
+rm /tmp/*
+
+docker-php-source delete
+
+docker-php-ext-enable redis
 
 docker-php-ext-install $modules
 
+apk add --no-cache $( scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' )
 
-
+apk del .build-deps
