@@ -5,7 +5,7 @@ workspace:
 pipeline:
   build-and-push-image:
     image: plugins/docker
-    repo: fpfis/${DRONE_BRANCH##*/}
+    repo: fpfis/${DRONE_BRANCH%%*/}
     tags:
       - latest
     secrets: [ docker_username, docker_password ]
