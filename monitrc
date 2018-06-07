@@ -1,0 +1,18 @@
+set daemon 10
+
+set log syslog
+
+set httpd port 2812 and
+    use address localhost  # only accept connection from localhost
+    allow localhost        # allow localhost to connect to the server and
+    allow admin:monit      # require user 'admin' with password 'monit'
+
+check process apache with pidfile /run/httpd.pid
+  start program = "/usr/sbin/httpd" with timeout 60 seconds
+  stop program  = "/usr/sbin/httpd -k stop"
+
+
+check process php-fpm with pidfile /run/php-fpm.pid
+  start program = "/usr/local/sbin/php-fpm -g /run/php-fpm.pid -D" with timeout 60 seconds
+  stop program  = "/bin/kill `/bin/cat /run/php-fpm.pid`"
+
