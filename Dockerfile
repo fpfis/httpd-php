@@ -29,7 +29,7 @@ ADD monitrc /etc/monitrc
 
 ADD run.sh /
 
-EXPOSE 80
+EXPOSE 8080
 EXPOSE 2812
 
 ENTRYPOINT ["/run.sh"]
