@@ -27,6 +27,8 @@ RUN apk add --no-cache monit
 
 ADD monitrc /etc/monitrc
 
+RUN chmod 700 /etc/monitrc 
+
 ADD run.sh /
 
 EXPOSE 8080
