@@ -1,4 +1,10 @@
 # httpd-php
-Apache + PHP Docker images
+Alpine 3.7 
 
-PHP compiled for westmere
+Apache + PHP 5.6
+
+Monit
+
+Module list:
+
+
