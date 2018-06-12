@@ -8,6 +8,10 @@ ENV APACHE_EXTRA_CONF ""
 
 ENV APACHE_EXTRA_CONF_DIR ""
 
+ENV DAEMON_USER "www-data"
+
+ENV DAEMON_GROUP "www-data"
+
 # Install PHP Modules
 RUN curl https://raw.githubusercontent.com/fpfis/httpd-php/release/5.6/install-ext-modules.sh | /bin/sh
 
