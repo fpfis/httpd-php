@@ -3,6 +3,10 @@ workspace:
   path: httpd-php
 
 pipeline:
+  dumpenv:
+    image: library/bash
+    commands:
+      - printenv
   build-and-push-image:
     image: plugins/docker
     repo: fpfis/httpd-php
