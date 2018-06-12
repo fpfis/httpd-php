@@ -6,7 +6,7 @@ pipeline:
   build-and-push-image:
     image: plugins/docker
     repo: fpfis/httpd-php
-    tags: [ ${DRONE_BRANCH:8:1} , ${DRONE_BRANCH##*/} ]
+    tags: [ "${DRONE_BRANCH:8:1}" , ${DRONE_BRANCH##*/} ]
     secrets: [ docker_username, docker_password ]
     when:
       branch: release/*
