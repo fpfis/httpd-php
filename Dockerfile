@@ -15,7 +15,7 @@ ENV DAEMON_GROUP "www-data"
 # Install PHP Modules
 RUN curl https://raw.githubusercontent.com/fpfis/httpd-php/release/5.6/install-ext-modules.sh | /bin/sh
 
-RUN ln -s /usr/lib/etc/ /etc/php
+RUN ln -s /usr/local/etc/ /etc/php
 
 ### Add httpd
 RUN apk add --no-cache apache2 apache2-utils apache2-proxy 
