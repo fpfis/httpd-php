@@ -6,10 +6,8 @@ pipeline:
   dumpenv:
     image: library/bash
     commands:
-      - printenv
-      - echo ${DRONE_BRANCH%%/*}
+      - echo ${${DRONE_BRANCH##*/}:1}
       - echo ${DRONE_BRANCH##*/}
-      - echo ${DRONE_BRANCH/\//_}_${DRONE_COMMIT:0:8},${DRONE_BRANCH/\//_}
 #  build-and-push-image:
 #    image: plugins/docker
 #    repo: fpfis/httpd-php
