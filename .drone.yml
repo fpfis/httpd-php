@@ -6,7 +6,7 @@ pipeline:
   dumpenv:
     image: library/bash
     commands:
-      - echo ${${DRONE_BRANCH##*/}:1}
+      - echo ${DRONE_BRANCH##*/:1}
       - echo ${DRONE_BRANCH##*/}
 #  build-and-push-image:
 #    image: plugins/docker
