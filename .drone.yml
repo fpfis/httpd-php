@@ -9,10 +9,11 @@ pipeline:
       - printenv
       - echo ${DRONE_BRANCH%%/*}
       - echo ${DRONE_BRANCH##/*}
-  build-and-push-image:
-    image: plugins/docker
-    repo: fpfis/httpd-php
-    tags: [ 5 , 5.6 , latest ]
-    secrets: [ docker_username, docker_password ]
-    when:
-      branch: release/*
+      - echo ${DRONE_BRANCH/\//_}_${DRONE_COMMIT:0:8},${DRONE_BRANCH/\//_}
+#  build-and-push-image:
+#    image: plugins/docker
+#    repo: fpfis/httpd-php
+#    tags: [ 5 , 5.6 , latest ]
+#    secrets: [ docker_username, docker_password ]
+#    when:
+#      branch: release/*
