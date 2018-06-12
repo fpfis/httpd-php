@@ -7,6 +7,8 @@ pipeline:
     image: library/bash
     commands:
       - printenv
+      - echo ${DRONE_BRANCH%%/*}
+      - echo ${DRONE_BRANCH##/*}
   build-and-push-image:
     image: plugins/docker
     repo: fpfis/httpd-php
