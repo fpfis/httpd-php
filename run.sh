@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e
 
-trap "echo TRAP" EXIT
-
 # Get uid for the current docroot
 [ -z "${DOCUMENT_ROOT}" ] && export DOCUMENT_ROOT=/var/www/html
 
@@ -22,5 +20,10 @@ if [ -z "$CMD" ]; then
   /usr/bin/monit -I
 else
   # Run the command as user web
-  HOME=/tmp su www-data -c sh -c "$CMD"
+  if id -u www-data >/dev/null 2>&1;
+  then 
+    HOME=/tmp su www-data -c sh -c "$CMD"
+  else
+    eval "$CMD"
+  fi
 fi
