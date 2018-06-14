@@ -17,6 +17,8 @@ RUN curl https://raw.githubusercontent.com/fpfis/httpd-php/release/7.1/install-e
 
 RUN ln -s /usr/local/etc/ /etc/php
 
+ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
+
 ### Add httpd
 RUN apk add --no-cache apache2 apache2-utils apache2-proxy 
 
