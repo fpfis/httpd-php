@@ -1,4 +1,4 @@
-FROM php:5-fpm-alpine
+FROM php:7.1-fpm-alpine
 
 ENV DOCUMENT_ROOT /var/www/html
 
@@ -13,7 +13,7 @@ ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 
 # Install PHP Modules
-RUN curl https://raw.githubusercontent.com/fpfis/httpd-php/release/5.6/install-ext-modules.sh | /bin/sh
+RUN curl https://raw.githubusercontent.com/fpfis/httpd-php/release/7.1/install-ext-modules.sh | /bin/sh
 
 RUN ln -s /usr/local/etc/ /etc/php
 
