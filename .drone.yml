@@ -1,5 +1,5 @@
 workspace:
-  base: ${DRONE_BRANCH%%/*}
+  base: /${DRONE_BRANCH%%/*}
   path: ${DRONE_BRANCH##*/}
 
 pipeline:
