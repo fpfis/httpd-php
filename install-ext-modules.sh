@@ -2,7 +2,7 @@
 
 set -xue
 
-modules="bz2 calendar exif gd pdo_mysql opcache zip xsl intl mcrypt ldap "
+modules="bz2 calendar exif gd pdo_mysql opcache zip xsl intl mcrypt ldap sockets "
 
 
 #Dumb list of dev dependencies...
