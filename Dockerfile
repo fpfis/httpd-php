@@ -12,6 +12,9 @@ ENV DAEMON_USER "www-data"
 
 ENV DAEMON_GROUP "www-data"
 
+### Add ssmtp
+RUN apk add --no-cache ssmtp
+
 # Install PHP Modules
 ADD install-ext-modules.sh /install-ext-modules.sh
 RUN /install-ext-modules.sh
@@ -19,6 +22,7 @@ RUN /install-ext-modules.sh
 RUN ln -s /usr/local/etc/ /etc/php
 
 ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
+
 
 ### Add httpd
 RUN apk add --no-cache apache2 apache2-utils apache2-proxy 
@@ -43,4 +47,3 @@ EXPOSE 8080
 EXPOSE 2812
 
 ENTRYPOINT ["/run.sh"]
-
