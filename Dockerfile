@@ -28,6 +28,7 @@ ADD apache2_conf/ /etc/apache2/
 RUN ln -s /usr/lib/apache2/ /etc/apache2/modules
 
 RUN rm /etc/apache2/conf.d/mpm.conf
+RUN rm /usr/local/etc/php-fpm.d/zz-docker.conf
 
 ### Add monit
 RUN apk add --no-cache monit
