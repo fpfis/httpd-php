@@ -13,7 +13,8 @@ ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 
 # Install PHP Modules
-RUN curl https://raw.githubusercontent.com/fpfis/httpd-php/release/7.1/install-ext-modules.sh | /bin/sh
+ADD install-ext-modules.sh /install-ext-modules.sh
+RUN /install-ext-modules.sh
 
 RUN ln -s /usr/local/etc/ /etc/php
 
