@@ -1,14 +1,29 @@
-workspace:
-  base: /${DRONE_BRANCH%%/*}
-  path: ${DRONE_BRANCH##*/}
-
 pipeline:
-  build-and-push-image:
+  # Build and push tags :
+  build-and-push:
     image: plugins/docker
     repo: fpfis/httpd-php
-    tags: [ 5 , 5.6 ] 
-#	- ${DRONE_BRANCH:8:1}
-#        - ${DRONE_BRANCH##*/}
-    secrets: [ docker_username, docker_password ]
+    auto_tag: true
+    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     when:
+      event: tag
+      
+  # Build and push dev release
+  build-and-push-branch:
+    image: plugins/docker
+    repo: fpfis/httpd-php
+    tags: ${DRONE_BRANCH##*/}
+    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
+    when:
+      event: push
       branch: release/*
+
+  # Mark production
+  build-and-push-production:
+    image: plugins/docker
+    repo: fpfis/httpd-php
+    tags: production-${DRONE_BRANCH##*/}
+    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
+    when:
+      event: push
+      branch: production/*

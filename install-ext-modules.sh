@@ -2,8 +2,7 @@
 
 set -xue
 
-modules="bz2 calendar exif gd pdo_mysql opcache zip xsl intl mcrypt ldap "
-
+modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mcrypt mbstring ldap sockets "
 
 #Dumb list of dev dependencies...
 makedepends="
@@ -51,13 +50,24 @@ apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS;
 
 docker-php-source extract;
 
+# GD
+
+docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+docker-php-ext-install gd
+
+# Igbinary
+
 pecl install igbinary;
 
 docker-php-ext-enable igbinary;
 
-echo '' | pecl install memcached-2.2.0;
+# Memcached
+
+echo '' | pecl install memcached;
 
 cd /tmp;
+
+# Redis
 
 pecl bundle redis;
 
@@ -74,6 +84,8 @@ rm -rf /tmp/*;
 docker-php-source delete;
 
 docker-php-ext-enable redis;
+
+# Others
 
 docker-php-ext-install $modules;
 
