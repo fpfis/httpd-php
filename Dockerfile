@@ -34,6 +34,10 @@ RUN ln -s /usr/lib/apache2/ /etc/apache2/modules
 RUN rm /etc/apache2/conf.d/mpm.conf
 RUN rm /usr/local/etc/php-fpm.d/zz-docker.conf
 
+### Fix iconv
+RUN apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+
 ### Add monit
 RUN apk add --no-cache monit
 
