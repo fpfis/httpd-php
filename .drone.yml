@@ -11,7 +11,7 @@ pipeline:
   # Build and push dev release
   build-and-push-branch:
     image: plugins/docker
-    repo: fpfis/platform
+    repo: fpfis/httpd-php
     tags: ${DRONE_BRANCH##*/}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     when:
@@ -21,7 +21,7 @@ pipeline:
   # Mark production
   build-and-push-production:
     image: plugins/docker
-    repo: fpfis/platform
+    repo: fpfis/httpd-php
     tags: production-${DRONE_BRANCH##*/}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     when:
