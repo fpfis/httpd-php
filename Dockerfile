@@ -8,6 +8,16 @@ ENV APACHE_EXTRA_CONF ""
 
 ENV APACHE_EXTRA_CONF_DIR ""
 
+ENV APACHE_ERROR_LOG /dev/fd/2
+
+ENV APACHE_ACCESS_LOG /dev/fd/1
+
+ENV FPM_MIN_CHILDREN 3
+
+ENV FPM_MAX_CHILDREN 5
+
+ENV PHP_ERROR_LOG /dev/fd/2
+
 ENV DAEMON_USER "www-data"
 
 ENV DAEMON_GROUP "www-data"
@@ -17,12 +27,11 @@ RUN apk add --no-cache ssmtp
 
 # Install PHP Modules
 ADD install-ext-modules.sh /install-ext-modules.sh
-RUN /install-ext-modules.sh
-
-RUN ln -s /usr/local/etc/ /etc/php
+RUN /install-ext-modules.sh && \
+    ln -s /usr/local/etc/ /etc/php
 
 ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
-
+ADD php_conf/ /usr/local/etc/php/conf.d/
 
 ### Add httpd
 RUN apk add --no-cache apache2 apache2-utils apache2-proxy 
@@ -31,15 +40,16 @@ ADD apache2_conf/ /etc/apache2/
 
 RUN ln -s /usr/lib/apache2/ /etc/apache2/modules
 
-RUN rm /etc/apache2/conf.d/mpm.conf
-RUN rm /usr/local/etc/php-fpm.d/zz-docker.conf
+### Clean upstream config
+RUN rm /etc/apache2/conf.d/mpm.conf && \
+    rm /usr/local/etc/php-fpm.d/zz-docker.conf
 
 ### Add monit
 RUN apk add --no-cache monit
 
 ADD monitrc /etc/monitrc
 
-RUN chmod 700 /etc/monitrc 
+RUN chmod 700 /etc/monitrc
 
 ADD run.sh /
 
