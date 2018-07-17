@@ -2,7 +2,7 @@
 
 set -xue
 
-modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mcrypt mbstring ldap sockets "
+modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mbstring ldap sockets "
 
 #Dumb list of dev dependencies...
 makedepends="
@@ -25,7 +25,7 @@ makedepends="
 	libedit-dev
 	libical-dev
 	libjpeg-turbo-dev
-	libmcrypt-dev
+    libmcrypt-dev
 	libpng-dev
 	libressl-dev
 	libwebp-dev
@@ -46,49 +46,36 @@ makedepends="
 	libmemcached-dev
 	"
 
-apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS;
-
-docker-php-source extract;
+apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS
+docker-php-source extract
 
 # GD
-
 docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 docker-php-ext-install gd
 
 # Igbinary
+pecl install igbinary
+docker-php-ext-enable igbinary
 
-pecl install igbinary;
-
-docker-php-ext-enable igbinary;
+# mcrypt
+pecl install mcrypt-1.0.1
+docker-php-ext-enable mcrypt
 
 # Memcached
-
-echo '' | pecl install memcached;
-
-cd /tmp;
+echo '' | pecl install memcached
+cd /tmp
 
 # Redis
-
-pecl bundle redis;
-
-cd redis;
-
-phpize;
-
-./configure --enable-redis-igbinary --enable-redis-lzf && make -j && make install;
-
-cd /;
-
-rm -rf /tmp/*;
-
-docker-php-source delete;
-
-docker-php-ext-enable redis;
+pecl bundle redis
+cd redis
+phpize
+./configure --enable-redis-igbinary --enable-redis-lzf && make -j && make install
+cd /
+rm -rf /tmp/*
+docker-php-source delete
+docker-php-ext-enable redis
 
 # Others
-
-docker-php-ext-install $modules;
-
-apk add --no-cache $( scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' );
-
+docker-php-ext-install $modules
+apk add --no-cache $( scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' )
 apk del .build-deps
