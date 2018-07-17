@@ -1,7 +1,7 @@
 # httpd-php
 Alpine 3.7 
 
-Apache + PHP 7.1
+Apache + PHP 7.2
 
 Monit
 
