@@ -20,6 +20,9 @@ RUN apk add --no-cache ssmtp
 ### Add nodejs
 RUN apk add --no-cache nodejs
 
+### Add bash
+RUN apk add --no-cache bash
+
 # Install PHP Modules
 ADD install-ext-modules.sh /install-ext-modules.sh
 RUN /install-ext-modules.sh && ln -s /usr/local/etc/ /etc/php
