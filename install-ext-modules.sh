@@ -25,7 +25,8 @@ makedepends="
 	libedit-dev
 	libical-dev
 	libjpeg-turbo-dev
-    libmcrypt-dev
+	libmemcached-dev
+	libmcrypt-dev
 	libpng-dev
 	libressl-dev
 	libwebp-dev
@@ -43,7 +44,6 @@ makedepends="
 	tidyhtml-dev
 	unixodbc-dev
 	zlib-dev
-	libmemcached-dev
 	"
 
 apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS
