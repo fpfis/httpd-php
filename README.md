@@ -1,7 +1,7 @@
 # httpd-php
 Alpine 3.7 
 
-Apache + PHP 7.2
+Apache + PHP 7.2 + Nodejs 8.9.3
 
 Monit
 
