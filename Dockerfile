@@ -17,8 +17,8 @@ ENV DAEMON_GROUP "www-data"
 ### Add ssmtp
 RUN apk add --no-cache ssmtp
 
-### Add nodejs
-RUN apk add --no-cache nodejs
+### Add nodejs && upgrade npm
+RUN apk add --no-cache nodejs && npm i npm@latest -g
 
 ### Add bash
 RUN apk add --no-cache bash
