@@ -23,11 +23,14 @@ RUN apk add --no-cache nodejs && npm i npm@latest -g
 ### Add bash
 RUN apk add --no-cache bash
 
-# Install PHP Modules
+### Install PHP Modules
 ADD install-ext-modules.sh /install-ext-modules.sh
 RUN /install-ext-modules.sh && ln -s /usr/local/etc/ /etc/php
 ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
 ADD php_conf/ /usr/local/etc/php/conf.d/
+
+### Add composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 ### Add httpd
 RUN apk add --no-cache apache2 apache2-utils apache2-proxy
