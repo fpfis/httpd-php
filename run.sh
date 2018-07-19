@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # Get uid for the current docroot
@@ -20,10 +20,11 @@ if [ -z "${CMD}" ]; then
   /usr/bin/monit -I
 else
   # Run the command as user web
-  if `grep -q www-data /etc/passwd`
+  regxp='^monit +([a-z0-9_-]| )+$'
+  if ! `grep -q www-data /etc/passwd` || [[ "${CMD}" =~ $regxp ]]
   then
-    HOME=/tmp su -s /bin/bash -c "${CMD}" www-data
-  else
     eval "${CMD}"
+  else
+    HOME=/tmp su -s /bin/bash -c "${CMD}" www-data
   fi
 fi

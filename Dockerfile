@@ -11,13 +11,12 @@ ENV FPM_MIN_CHILDREN 10
 ENV FPM_MAX_CHILDREN 30
 ENV FPM_MAX_REQUESTS 500
 ENV PHP_ERROR_LOG /dev/fd/2
-ENV SMTP_HOST 127.0.0.1
+ENV PHP_DISPLAY_ERRORS Off
 ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 
 ### Add ssmtp, nodejs, bash, git & upgrade npm
-RUN apk add --no-cache ssmtp nodejs bash git && npm i npm@latest -g
-ADD ssmtp_conf/ssmtp.conf /etc/ssmtp/ssmtp.conf
+RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && apk add --no-cache ssmtp nodejs bash git chromium@edge nss@edge && npm i npm@latest -g && npm i supervisor && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
 
 ### Install PHP Modules/Composer
 ADD install-ext-modules.sh /install-ext-modules.sh
@@ -37,6 +36,9 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 ADD monitrc /etc/monitrc
 ADD run.sh /
 RUN apk add --no-cache monit && chmod 700 /etc/monitrc
+
+# Fixing timezone
+ADD localtime /etc/localtime
 
 EXPOSE 8080
 EXPOSE 2812
