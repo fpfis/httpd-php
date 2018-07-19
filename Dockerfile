@@ -14,41 +14,27 @@ ENV PHP_ERROR_LOG /dev/fd/2
 ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 
-### Add ssmtp
-RUN apk add --no-cache ssmtp
+### Add ssmtp, nodejs, bash, git & upgrade npm
+RUN apk add --no-cache ssmtp nodejs bash git && npm i npm@latest -g
 
-### Add nodejs && upgrade npm
-RUN apk add --no-cache nodejs && npm i npm@latest -g
-
-### Add bash
-RUN apk add --no-cache bash
-
-### Install PHP Modules
+### Install PHP Modules/Composer
 ADD install-ext-modules.sh /install-ext-modules.sh
-RUN /install-ext-modules.sh && ln -s /usr/local/etc/ /etc/php
+RUN /install-ext-modules.sh && ln -s /usr/local/etc/ /etc/php && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
 ADD php_conf/ /usr/local/etc/php/conf.d/
 
-### Add composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
-
-### Add httpd
-RUN apk add --no-cache apache2 apache2-utils apache2-proxy
+### Add httpd && clean upstream config
+RUN apk add --no-cache apache2 apache2-utils apache2-proxy && ln -s /usr/lib/apache2/ /etc/apache2/modules && rm /etc/apache2/conf.d/mpm.conf && rm /usr/local/etc/php-fpm.d/zz-docker.conf
 ADD apache2_conf/ /etc/apache2/
-RUN ln -s /usr/lib/apache2/ /etc/apache2/modules
-
-### Clean upstream config
-RUN rm /etc/apache2/conf.d/mpm.conf && rm /usr/local/etc/php-fpm.d/zz-docker.conf
 
 ### Fix iconv
 RUN apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 ### Add monit
-RUN apk add --no-cache monit
 ADD monitrc /etc/monitrc
-RUN chmod 700 /etc/monitrc
 ADD run.sh /
+RUN apk add --no-cache monit && chmod 700 /etc/monitrc
 
 EXPOSE 8080
 EXPOSE 2812
