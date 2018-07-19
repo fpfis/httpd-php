@@ -6,16 +6,18 @@ ENV APACHE_EXTRA_CONF ""
 ENV APACHE_EXTRA_CONF_DIR ""
 ENV APACHE_ERROR_LOG /dev/fd/2
 ENV APACHE_ACCESS_LOG /dev/fd/1
-ENV FPM_START_SERVERS 4
-ENV FPM_MIN_CHILDREN 3
-ENV FPM_MAX_CHILDREN 5
-ENV FPM_MAX_REQUESTS 50
+ENV FPM_START_SERVERS 20
+ENV FPM_MIN_CHILDREN 10
+ENV FPM_MAX_CHILDREN 30
+ENV FPM_MAX_REQUESTS 500
 ENV PHP_ERROR_LOG /dev/fd/2
+ENV SMTP_HOST 127.0.0.1
 ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 
 ### Add ssmtp, nodejs, bash, git & upgrade npm
 RUN apk add --no-cache ssmtp nodejs bash git && npm i npm@latest -g
+ADD ssmtp_conf/ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 ### Install PHP Modules/Composer
 ADD install-ext-modules.sh /install-ext-modules.sh
