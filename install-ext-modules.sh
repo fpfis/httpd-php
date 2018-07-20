@@ -46,7 +46,12 @@ makedepends="
 	zlib-dev
 	"
 
+
 apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS
+# mcrypt
+pecl install mcrypt-1.0.1
+docker-php-ext-enable mcrypt
+
 docker-php-source extract
 
 # GD

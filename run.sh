@@ -20,8 +20,7 @@ if [ -z "${CMD}" ]; then
   /usr/bin/supervisord -c /etc/supervisord/supervisord.conf
 else
   # Run the command as user web
-  regxp='^monit +([a-z0-9_-]| )+$'
-  if ! `grep -q www-data /etc/passwd` || [[ "${CMD}" =~ $regxp ]]
+  if ! `grep -q www-data /etc/passwd`
   then
     eval "${CMD}"
   else
