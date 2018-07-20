@@ -17,7 +17,7 @@ if [ -z ${APACHE_EXTRA_CONF} ]; then export APACHE_EXTRA_CONF=""; fi
 
 if [ -z "${CMD}" ]; then
   # If no run command provided, run supervisor as root a:
-  /usr/bin/monit -I
+  /usr/bin/supervisord -c /etc/supervisord/supervisord.conf
 else
   # Run the command as user web
   regxp='^monit +([a-z0-9_-]| )+$'

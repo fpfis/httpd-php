@@ -3,7 +3,7 @@ Alpine 3.7
 
 Apache + PHP 7.2 + Nodejs 8.9
 
-Monit
+Supervisord
 
 Apache Variables:
 

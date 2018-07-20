@@ -12,6 +12,7 @@ ENV FPM_MAX_CHILDREN 30
 ENV FPM_MAX_REQUESTS 500
 ENV PHP_ERROR_LOG /dev/fd/2
 ENV PHP_DISPLAY_ERRORS Off
+ENV SUPERVISORD_CONF_DIR /etc/supervisord/
 ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 
@@ -25,22 +26,23 @@ ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
 ADD php_conf/ /usr/local/etc/php/conf.d/
 
 ### Add httpd && clean upstream config
-RUN apk add --no-cache apache2 apache2-utils apache2-proxy && ln -s /usr/lib/apache2/ /etc/apache2/modules && rm /etc/apache2/conf.d/mpm.conf && rm /usr/local/etc/php-fpm.d/zz-docker.conf
+RUN apk add --no-cache apache2 apache2-utils apache2-proxy && ln -s /usr/lib/apache2/ /etc/apache2/modules && rm /etc/apache2/conf.d/mpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf /etc/apache2/conf.d/proxy.conf
 ADD apache2_conf/ /etc/apache2/
 
 ### Fix iconv
 RUN apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
-### Add monit
-ADD monitrc /etc/monitrc
+### Add supervisord
+COPY --from=ochinchina/supervisord:latest /usr/local/bin/supervisord /usr/bin/supervisord
+RUN mkdir /etc/supervisord
+COPY supervisord_conf/ /etc/supervisord/
 ADD run.sh /
-RUN apk add --no-cache monit && chmod 700 /etc/monitrc
 
 # Fixing timezone
 ADD localtime /etc/localtime
 
 EXPOSE 8080
-EXPOSE 2812
+EXPOSE 9001
 
 ENTRYPOINT ["/run.sh"]
