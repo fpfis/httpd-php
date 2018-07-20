@@ -48,6 +48,7 @@ makedepends="
 
 
 apk add --no-cache --virtual .build-deps $makedepends $PHPIZE_DEPS
+
 # mcrypt
 pecl install mcrypt-1.0.1
 docker-php-ext-enable mcrypt
@@ -61,10 +62,6 @@ docker-php-ext-install gd
 # Igbinary
 pecl install igbinary
 docker-php-ext-enable igbinary
-
-# mcrypt
-pecl install mcrypt-1.0.1
-docker-php-ext-enable mcrypt
 
 # Memcached
 echo '' | pecl install memcached

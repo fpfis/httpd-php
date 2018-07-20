@@ -38,7 +38,6 @@ COPY --from=ochinchina/supervisord:latest /usr/local/bin/supervisord /usr/bin/su
 RUN mkdir /etc/supervisord
 COPY supervisord_conf/ /etc/supervisord/
 ADD run.sh /
-RUN apk add --no-cache monit && chmod 700 /etc/monitrc
 
 # Fixing timezone
 ADD localtime /etc/localtime
