@@ -63,7 +63,7 @@ docker-php-ext-enable igbinary;
 
 # Mcrypt
 
-pecl install mcrypt;
+pecl install mcrypt-1.0.1;
 
 docker-php-ext-enable mcrypt;
 
