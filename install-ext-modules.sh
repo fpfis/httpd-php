@@ -2,7 +2,7 @@
 
 set -xue
 
-modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mcrypt mbstring ldap sockets "
+modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mbstring ldap sockets "
 
 #Dumb list of dev dependencies...
 makedepends="
@@ -60,6 +60,12 @@ docker-php-ext-install gd
 pecl install igbinary;
 
 docker-php-ext-enable igbinary;
+
+# Mcrypt
+
+pecl install mcrypt;
+
+docker-php-ext-enable mcrypt;
 
 # Memcached
 
