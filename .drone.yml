@@ -3,11 +3,14 @@ pipeline:
   build-and-push:
     image: plugins/docker
     repo: fpfis/httpd-php
-    auto_tag: true
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
+    tags:
+      - ${DRONE_TAG}
+      - ${DRONE_TAG%%-*}
+      - ${DRONE_BRANCH##*/}
     when:
       event: tag
-      
+
   # Build and push dev release
   build-and-push-branch:
     image: plugins/docker
@@ -27,3 +30,4 @@ pipeline:
     when:
       event: push
       branch: production/*
+
