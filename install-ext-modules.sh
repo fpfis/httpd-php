@@ -54,7 +54,7 @@ pecl install mcrypt-1.0.1
 docker-php-ext-enable mcrypt
 
 docker-php-source extract
-
+ 
 # GD
 docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 docker-php-ext-install gd
@@ -77,7 +77,13 @@ rm -rf /tmp/*
 docker-php-source delete
 docker-php-ext-enable redis
 
+# Mysqli
+docker-php-ext-configure mysqli --with-mysqli=mysqlnd
+docker-php-ext-install mysqli
+
 # Others
 docker-php-ext-install $modules
+
 apk add --no-cache $( scanelf --needed --nobanner --format '%n#p' --recursive /usr/local | tr ',' '\n' | sort -u | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' )
 apk del .build-deps
+
