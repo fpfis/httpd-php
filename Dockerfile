@@ -16,8 +16,8 @@ ENV SUPERVISORD_CONF_DIR /etc/supervisord/
 ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 
-### Add ssmtp, nodejs, bash, git & upgrade npm
-RUN echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && apk add --no-cache ssmtp nodejs bash git chromium@edge nss@edge && npm i npm@latest -g && npm i supervisor && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
+### Add ssmtp, bash, git
+RUN apk add --no-cache ssmtp bash git && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
 
 ### Install PHP Modules/Composer
 ADD install-ext-modules.sh /install-ext-modules.sh
