@@ -22,8 +22,8 @@ ENV DAEMON_USER "www-data"
 
 ENV DAEMON_GROUP "www-data"
 
-### Add ssmtp
-RUN apk add --no-cache ssmtp
+### Add ssmtp & bash
+RUN apk add --no-cache ssmtp bash
 
 # Install PHP Modules
 ADD install-ext-modules.sh /install-ext-modules.sh
