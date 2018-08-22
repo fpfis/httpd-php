@@ -1,8 +1,7 @@
 # httpd-php
 Alpine 3.7 
 
-Apache + PHP 7.2 + Nodejs 8.9
-
+Apache + PHP 7.2
 Supervisord
 
 Apache Variables:
