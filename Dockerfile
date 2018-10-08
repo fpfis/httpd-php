@@ -1,5 +1,11 @@
 FROM php:5-fpm-stretch
 
+ARG php_modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mcrypt mbstring ldap sockets iconv gd"
+
+ARG dev_deps="libxml2-dev libbz2-dev zlib1g-dev libxslt1-dev libmcrypt-dev libldap2-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libmemcached-dev"
+
+ARG run_deps="libfreetype6 libjpeg62-turbo libmemcached11"
+
 ENV DOCUMENT_ROOT /var/www/html
 
 ENV PORT 8080
