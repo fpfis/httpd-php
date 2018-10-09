@@ -4,6 +4,7 @@ matrix:
     - 7.1
   TARGET:
     - httpd-php
+    - httpd-php-full
     - httpd-php-dev
 
 pipeline:

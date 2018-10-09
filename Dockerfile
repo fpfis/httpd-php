@@ -10,3 +10,8 @@ ADD scripts /scripts
 RUN /scripts/install-base.sh
 
 
+FROM httpd-php as httpd-php-full
+RUN /scripts/install-full.sh
+
+FROM httpd-php-full as httpd-php-dev
+RUN /scripts/install-dev.sh
