@@ -1,12 +1,20 @@
 matrix:
-  - PHP_VERSION: 7.1
-    OCI8_VERSION: 2.18
-  - PHP_VERSION: 5.6
-    OCI8_VERSION: 2.0.12
-  - TARGET:
+  PHP_VERSION: 
+    - 5.6
+    - 7.1
+  OCI8_VERSION: 
+    - 2.1.8
+    - 2.0.12
+  TARGET:
     - httpd-php
     - httpd-php-full
     - httpd-php-dev
+  include:
+    - PHP_VERSION: 7.1
+      OCI8_VERSION: 2.1.8
+    - PHP_VERSION: 5.6 
+      OCI8_VERSION: 2.0.12
+
 
 pipeline:
   # Build and push tags :
