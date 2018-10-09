@@ -7,6 +7,10 @@ add-apt-repository -y ppa:ondrej/php
 
 
 for module in ${php_modules}; do
+  if [ "${php_version}" == "7.2" ] && [ "${module}" == "mcrypt" ]; then
+    echo "WARNING: ${module} not supported on 7.2"
+    continue
+  fi
   modules="php${php_version}-${module} ${modules}"
 done
 
