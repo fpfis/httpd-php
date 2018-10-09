@@ -28,7 +28,7 @@ popd
 rm -Rf oci8-${oci8_version} oci8-${oci8_version}.tar.gz
 
 # Clean :
-apt-get autoremove curl unzip php${php_version}-dev --purge
+apt-get autoremove -y curl unzip php${php_version}-dev --purge
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -rf /tmp/*
