@@ -18,13 +18,14 @@ echo /usr/local/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf
 # OCI8 build :
 apt-get install -y  php${php_version}-dev
 pecl download oci8-${oci8_version}
+tar -xzvf oci8-${oci8_version}.tar.gz
 pushd oci8-${oci8_version}
 phpize
 ./configure --with-oci8=instantclient,/usr/local/instantclient_12_2
 make -j$(nproc)
 make install
 popd
-rm -Rf oci8-${oci8_version}
+rm -Rf oci8-${oci8_version} oci8-${oci8_version}.tar.gz
 
 # Clean :
 apt-get autoremove curl unzip php${php_version}-dev --purge
