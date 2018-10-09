@@ -14,7 +14,7 @@ pipeline:
     target: ${TARGET}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     build_args:
-      - php_version: ${PHP_VERSION}
+      - php_version=${PHP_VERSION}
     tags:
       - ${DRONE_TAG}-ubuntu
       - ${DRONE_TAG%%-*}-ubuntu
@@ -30,7 +30,7 @@ pipeline:
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     target: ${TARGET}
     build_args:
-      - php_version: ${PHP_VERSION}
+      - php_version=${PHP_VERSION}
     when:
       event: push
       branch: release/*
@@ -43,7 +43,7 @@ pipeline:
     target: ${TARGET}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     build_args:
-      - php_version: ${PHP_VERSION}
+      - php_version=${PHP_VERSION}
     when:
       event: push
       branch: production/*
