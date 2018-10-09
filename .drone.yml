@@ -27,22 +27,6 @@ matrix:
 
 
 pipeline:
-  # Build and push tags :
-  build-and-push:
-    image: plugins/docker
-    repo: fpfis/${TARGET}
-    target: ${TARGET}
-    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
-    build_args:
-      - php_version=${PHP_VERSION}
-      - oci8_version=${OCI8_VERSION}
-    tags:
-      - ${DRONE_TAG}-ubuntu
-      - ${DRONE_TAG%%-*}-ubuntu
-      - ${PHP_VERSION}-ubuntu
-    when:
-      event: tag
-
   # Build and push release
   build-and-push-branch:
     image: plugins/docker

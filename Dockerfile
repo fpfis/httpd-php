@@ -17,4 +17,8 @@ ENV oci8_version=${oci8_version}
 RUN /scripts/install-full.sh
 
 FROM httpd-php-full as httpd-php-dev
+ARG composer_version="1.7.2"
+ARG drush_version="8.1.17"
+ENV PATH=${PATH}:/root/.composer/vendor/bin
+ENV COMPOSER_DISABLE_ROOT_WARN 1
 RUN /scripts/install-dev.sh
