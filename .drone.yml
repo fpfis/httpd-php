@@ -9,10 +9,10 @@ matrix:
     - httpd-php
     - httpd-php-full
     - httpd-php-dev
-  include:
-    - PHP_VERSION: 7.1
+  exclude:
+    - PHP_VERSION: 5.6
       OCI8_VERSION: 2.1.8
-    - PHP_VERSION: 5.6 
+    - PHP_VERSION: 7.1 
       OCI8_VERSION: 2.0.12
 
 
