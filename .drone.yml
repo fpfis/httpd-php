@@ -1,4 +1,10 @@
 matrix:
+  PHP_VERSION: 
+    - 5.6
+    - 7.1
+  OCI8_VERSION: 
+    - 2.1.8
+    - 2.0.12
   TARGET:
     - httpd-php
     - httpd-php-full
