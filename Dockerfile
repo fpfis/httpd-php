@@ -1,4 +1,4 @@
-FROM php:5-fpm-stretch
+FROM php:5.6-fpm-stretch as httpd-php
 
 ARG php_modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mcrypt mbstring ldap sockets iconv gd oci8"
 
@@ -40,10 +40,8 @@ RUN apt-get update &&\
     # OCI8 deps :
     curl https://repo.ne-dev.eu/deb/instantclient-basic-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-basic-linux.zip &&\
     unzip /tmp/instantclient-basic-linux.zip -d /usr/local/ &&\
-    rm /tmp/instantclient-basic-linux.zip &&\
     curl https://repo.ne-dev.eu/deb/instantclient-sdk-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-sdk-linux.zip &&\
     unzip /tmp/instantclient-sdk-linux.zip -d /usr/local/ &&\
-    rm /tmp/instantclient-sdk-linux.zip &&\
     ln -s /usr/local/instantclient_12_2/libclntsh.so.12.1 /usr/local/instantclient_12_2/libclntsh.so &&\
     echo /usr/local/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf && ldconfig &&\
 
@@ -65,7 +63,6 @@ RUN apt-get update &&\
     phpize &&\
     ./configure --enable-redis-igbinary --enable-redis-lzf && make -j && make install &&\
     cd / &&\
-    rm -rf /tmp/* &&\
     docker-php-source delete &&\
     docker-php-ext-enable redis &&\
 
@@ -73,6 +70,7 @@ RUN apt-get update &&\
     apt-get -y autoremove --purge $dev_deps &&\
     apt-get -y clean &&\
     rm -rf /var/lib/apt/lists/* &&\
+    rm -rf /tmp/* &&\
     ln -s /usr/local/etc/ /etc/php
 
 ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
@@ -87,6 +85,22 @@ ADD supervisor.conf /etc/supervisor/conf.d/php.conf
 ADD run.sh /
 
 EXPOSE 8080
-EXPOSE 2812
 
 ENTRYPOINT ["/run.sh"]
+
+# Image with Java
+FROM httpd-php as httpd-php-full
+
+RUN apt-get update &&\
+    mkdir -p /usr/share/man/man1 &&\
+    apt-get install -y openjdk-8-jre-headless  &&\
+    apt-get clean &&\
+    rm -rf /var/lib/apt/lists/*
+
+# Dev image
+FROM httpd-php as httpd-php-dev
+
+RUN docker-php-source extract &&\
+    pecl install xdebug-2.5.5 &&\
+    docker-php-ext-enable xdebug &&\
+    docker-php-source delete
