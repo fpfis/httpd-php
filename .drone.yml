@@ -1,8 +1,10 @@
 matrix:
+  PHP_VERSION:
+    - 5.6
+    - 7.1
   TARGET:
     - httpd-php
     - httpd-php-dev
-    - httpd-php-full
 
 pipeline:
   # Build and push tags :
@@ -11,21 +13,24 @@ pipeline:
     repo: fpfis/${TARGET}
     target: ${TARGET}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
+    build_args:
+      - php_version: ${PHP_VERSION}
     tags:
-      - ${DRONE_TAG}
-      - ${DRONE_TAG%%-*}
-      - ${DRONE_BRANCH##*/}
+      - ${DRONE_TAG}-ubuntu
+      - ${DRONE_TAG%%-*}-ubuntu
+      - ${PHP_VERSION}-ubuntu
     when:
       event: tag
-
 
   # Build and push release
   build-and-push-branch:
     image: plugins/docker
     repo: fpfis/${TARGET}
-    tags: ${DRONE_BRANCH##*/}
+    tags: ${PHP_VERSION}-ubuntu
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     target: ${TARGET}
+    build_args:
+      - php_version: ${PHP_VERSION}
     when:
       event: push
       branch: release/*
@@ -34,9 +39,11 @@ pipeline:
   build-and-push-production:
     image: plugins/docker
     repo: fpfis/${TARGET}
-    tags: production-${DRONE_BRANCH##*/}
+    tags: production-${PHP_VERSION}-ubuntu
     target: ${TARGET}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
+    build_args:
+      - php_version: ${PHP_VERSION}
     when:
       event: push
       branch: production/*
