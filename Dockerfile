@@ -33,46 +33,46 @@ ENV DAEMON_GROUP "www-data"
 
 # Install PHP Modules
 RUN apt-get update &&\
-	# APT deps :
-        apt-get -y install $run_deps &&\
-	apt-get -y install $dev_deps &&\
-        
-        # OCI8 deps :
-        curl https://repo.ne-dev.eu/deb/instantclient-basic-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-basic-linux.zip &&\
-        unzip /tmp/instantclient-basic-linux.zip -d /usr/local/ &&\
-        rm /tmp/instantclient-basic-linux.zip &&\
-        curl https://repo.ne-dev.eu/deb/instantclient-sdk-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-sdk-linux.zip &&\
-        unzip /tmp/instantclient-sdk-linux.zip -d /usr/local/ &&\
-        rm /tmp/instantclient-sdk-linux.zip &&\
-        ln -s /usr/local/instantclient_12_2/libclntsh.so.12.1 /usr/local/instantclient_12_2/libclntsh.so &&\
-        echo /usr/local/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf && ldconfig &&\
+    # APT deps :
+    apt-get -y install $run_deps &&\
+    apt-get -y install $dev_deps &&\
 
-        # Setup modules :
-	docker-php-source extract &&\
-	docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ &&\
-	docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ &&\
-        docker-php-ext-configure oci8 --with-oci8=instantclient,/usr/local/instantclient_12_2 &&\
-	docker-php-ext-install -j$(nproc) $php_modules &&\
-        
-        # Setup redis/memcached module :
-        pecl install igbinary &&\
-        docker-php-ext-enable igbinary &&\
-        echo '' | pecl install memcached-2.2.0 &&\
-        docker-php-ext-enable memcached &&\
-        cd /tmp &&\
-  	pecl bundle redis &&\
-	cd redis &&\
-	phpize &&\
-	./configure --enable-redis-igbinary --enable-redis-lzf && make -j && make install &&\
-	cd / &&\
-	rm -rf /tmp/* &&\
-	docker-php-source delete &&\
-	docker-php-ext-enable redis &&\
+    # OCI8 deps :
+    curl https://repo.ne-dev.eu/deb/instantclient-basic-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-basic-linux.zip &&\
+    unzip /tmp/instantclient-basic-linux.zip -d /usr/local/ &&\
+    rm /tmp/instantclient-basic-linux.zip &&\
+    curl https://repo.ne-dev.eu/deb/instantclient-sdk-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-sdk-linux.zip &&\
+    unzip /tmp/instantclient-sdk-linux.zip -d /usr/local/ &&\
+    rm /tmp/instantclient-sdk-linux.zip &&\
+    ln -s /usr/local/instantclient_12_2/libclntsh.so.12.1 /usr/local/instantclient_12_2/libclntsh.so &&\
+    echo /usr/local/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf && ldconfig &&\
 
-        # Clean our mess
-	apt-get -y autoremove --purge $dev_deps &&\
-	apt-get -y clean &&\
-        rm -rf /var/lib/apt/lists/*
+    # Setup modules :
+    docker-php-source extract &&\
+    docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ &&\
+    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ &&\
+    docker-php-ext-configure oci8 --with-oci8=instantclient,/usr/local/instantclient_12_2 &&\
+    docker-php-ext-install -j$(nproc) $php_modules &&\
+
+    # Setup redis/memcached module :
+    pecl install igbinary &&\
+    docker-php-ext-enable igbinary &&\
+    echo '' | pecl install memcached-2.2.0 &&\
+    docker-php-ext-enable memcached &&\
+    cd /tmp &&\
+    pecl bundle redis &&\
+    cd redis &&\
+    phpize &&\
+    ./configure --enable-redis-igbinary --enable-redis-lzf && make -j && make install &&\
+    cd / &&\
+    rm -rf /tmp/* &&\
+    docker-php-source delete &&\
+    docker-php-ext-enable redis &&\
+
+    # Clean our mess
+    apt-get -y autoremove --purge $dev_deps &&\
+    apt-get -y clean &&\
+    rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /usr/local/etc/ /etc/php
 
