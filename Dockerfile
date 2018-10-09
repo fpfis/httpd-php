@@ -20,5 +20,5 @@ FROM httpd-php-full as httpd-php-dev
 ARG composer_version="1.7.2"
 ARG drush_version="8.1.17"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
-ENV COMPOSER_DISABLE_ROOT_WARN 1
+ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN /scripts/install-dev.sh
