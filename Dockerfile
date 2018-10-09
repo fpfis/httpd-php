@@ -13,6 +13,7 @@ RUN /scripts/install-base.sh
 
 FROM httpd-php as httpd-php-full
 ARG oci8_version="2.0.12"
+ENV oci8_version=${oci8_version}
 RUN /scripts/install-full.sh
 
 FROM httpd-php-full as httpd-php-dev
