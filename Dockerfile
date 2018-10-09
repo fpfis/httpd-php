@@ -1,6 +1,6 @@
 FROM php:5.6-fpm-stretch as httpd-php
 
-ARG php_modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mcrypt mbstring ldap sockets iconv gd oci8"
+ARG php_modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mcrypt mbstring ldap sockets iconv gd"
 
 ARG dev_deps="unzip libxml2-dev libbz2-dev zlib1g-dev libxslt1-dev libmcrypt-dev libldap2-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libmemcached-dev"
 
@@ -34,22 +34,13 @@ ENV DAEMON_GROUP "www-data"
 # Install PHP Modules
 RUN apt-get update &&\
     # APT deps :
-    apt-get -y install $run_deps &&\
-    apt-get -y install $dev_deps &&\
-
-    # OCI8 deps :
-    curl https://repo.ne-dev.eu/deb/instantclient-basic-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-basic-linux.zip &&\
-    unzip /tmp/instantclient-basic-linux.zip -d /usr/local/ &&\
-    curl https://repo.ne-dev.eu/deb/instantclient-sdk-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-sdk-linux.zip &&\
-    unzip /tmp/instantclient-sdk-linux.zip -d /usr/local/ &&\
-    ln -s /usr/local/instantclient_12_2/libclntsh.so.12.1 /usr/local/instantclient_12_2/libclntsh.so &&\
-    echo /usr/local/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf && ldconfig &&\
+    apt-get -y install --no-install-recommends $run_deps &&\
+    apt-get -y install --no-install-recommends $dev_deps &&\
 
     # Setup modules :
     docker-php-source extract &&\
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ &&\
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ &&\
-    docker-php-ext-configure oci8 --with-oci8=instantclient,/usr/local/instantclient_12_2 &&\
     docker-php-ext-install -j$(nproc) $php_modules &&\
 
     # Setup redis/memcached module :
@@ -93,12 +84,26 @@ FROM httpd-php as httpd-php-full
 
 RUN apt-get update &&\
     mkdir -p /usr/share/man/man1 &&\
-    apt-get install -y openjdk-8-jre-headless  &&\
+    apt-get install --no-install-recommends  -y openjdk-8-jre-headless unzip  &&\
+    # OCI8 deps :
+    curl https://repo.ne-dev.eu/deb/instantclient-basic-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-basic-linux.zip &&\
+    unzip /tmp/instantclient-basic-linux.zip -d /usr/local/ &&\
+    curl https://repo.ne-dev.eu/deb/instantclient-sdk-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-sdk-linux.zip &&\
+    unzip /tmp/instantclient-sdk-linux.zip -d /usr/local/ &&\
+    ln -s /usr/local/instantclient_12_2/libclntsh.so.12.1 /usr/local/instantclient_12_2/libclntsh.so &&\
+    echo /usr/local/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf && ldconfig &&\
+    # OCI8 build :
+    docker-php-source extract &&\
+    docker-php-ext-configure oci8 --with-oci8=instantclient,/usr/local/instantclient_12_2 &&\
+    docker-php-ext-install -j$(nproc) oci8 &&\
+    docker-php-source delete &&\
+    # Clean :
     apt-get clean &&\
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* &&\
+    rm -rf /tmp/*
 
 # Dev image
-FROM httpd-php as httpd-php-dev
+FROM httpd-php-full as httpd-php-dev
 
 RUN docker-php-source extract &&\
     pecl install xdebug-2.5.5 &&\
