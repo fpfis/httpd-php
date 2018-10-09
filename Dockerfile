@@ -4,7 +4,7 @@ ARG php_modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mcrypt mb
 
 ARG dev_deps="unzip libxml2-dev libbz2-dev zlib1g-dev libxslt1-dev libmcrypt-dev libldap2-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libmemcached-dev"
 
-ARG run_deps="libfreetype6 libjpeg62-turbo libmemcached11 libxml2 libmcrypt4 libldap-common libxslt1.1 libaio1 libmemcachedutil2"
+ARG run_deps="apache2 supervisor libfreetype6 libjpeg62-turbo libmemcached11 libxml2 libmcrypt4 libldap-common libxslt1.1 libaio1 libmemcachedutil2"
 
 ENV DOCUMENT_ROOT /var/www/html
 
@@ -72,31 +72,15 @@ RUN apt-get update &&\
     # Clean our mess
     apt-get -y autoremove --purge $dev_deps &&\
     apt-get -y clean &&\
-    rm -rf /var/lib/apt/lists/*
-
-RUN ln -s /usr/local/etc/ /etc/php
+    rm -rf /var/lib/apt/lists/* &&\
+    ln -s /usr/local/etc/ /etc/php
 
 ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
 ADD php_conf/ /usr/local/etc/php/conf.d/
 
 ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
 
-### Add httpd
-RUN apt update &&\
-	apt -y install apache2 &&\
-	apt clean
-
-
 ADD apache2_conf/ /etc/apache2/
-
-### Clean upstream config
-#RUN rm /etc/apache2/conf.d/mpm.conf && \
-#    rm /usr/local/etc/php-fpm.d/zz-docker.conf
-
-### Add monit
-RUN apt update &&\
-	apt -y install supervisor &&\
-	apt clean
 
 ADD supervisor.conf /etc/supervisor/conf.d/php.conf
 
