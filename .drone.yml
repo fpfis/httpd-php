@@ -1,9 +1,15 @@
+matrix:
+  TARGET:
+    - httpd-php
+    - httpd-php-dev
+    - httpd-php-full
+
 pipeline:
   # Build and push tags :
   build-and-push:
     image: plugins/docker
-    repo: fpfis/httpd-php
-    target: httpd-php
+    repo: fpfis/${TARGET}
+    target: ${TARGET}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     tags:
       - ${DRONE_TAG}
@@ -16,45 +22,21 @@ pipeline:
   # Build and push release
   build-and-push-branch:
     image: plugins/docker
-    repo: fpfis/httpd-php
+    repo: fpfis/${TARGET}
     tags: ${DRONE_BRANCH##*/}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
-    target: httpd-php
+    target: ${TARGET}
     when:
       event: push
       branch: release/*
-
-  # Build and push dev release
-  build-and-push-branch-dev:
-    image: plugins/docker
-    repo: fpfis/httpd-php
-    tags: ${DRONE_BRANCH##*/}-dev
-    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
-    target: httpd-php-dev
-    when:
-      event: push
-      branch: release/*
-
-  # Build and push dev release
-  build-and-push-branch-full:
-    image: plugins/docker
-    repo: fpfis/httpd-php
-    tags: ${DRONE_BRANCH##*/}-full
-    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
-    target: httpd-php-full
-    when:
-      event: push
-      branch: release/*
-
 
   # Mark production
   build-and-push-production:
     image: plugins/docker
-    repo: fpfis/httpd-php
+    repo: fpfis/${TARGET}
     tags: production-${DRONE_BRANCH##*/}
-    target: httpd-php
+    target: ${TARGET}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     when:
       event: push
       branch: production/*
-
