@@ -18,7 +18,7 @@ echo /usr/local/instantclient_12_2 > /etc/ld.so.conf.d/oracle-instantclient.conf
 # OCI8 build :
 apt-get install -y  php${php_version}-dev
 pecl download oci8-${oci8_version}
-tar -xzvf oci8-${oci8_version}.tar.gz
+tar -xzvf oci8-${oci8_version}.tgz
 pushd oci8-${oci8_version}
 phpize
 ./configure --with-oci8=instantclient,/usr/local/instantclient_12_2
