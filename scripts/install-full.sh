@@ -26,6 +26,8 @@ make -j$(nproc)
 make install
 popd
 rm -Rf oci8-${oci8_version} oci8-${oci8_version}.tar.gz
+echo "extension=oci8.so" > /etc/php/${php_version}/mods-available/oci8.ini
+phpenmod oci8
 
 # Clean :
 apt-get autoremove -y curl unzip php${php_version}-dev --purge
