@@ -38,7 +38,7 @@ pipeline:
   # Build and push dev release
   build-and-push-branch-full:
     image: plugins/docker
-    repo: fpfis/httpd-php-dev
+    repo: fpfis/httpd-php
     tags: ${DRONE_BRANCH##*/}-full
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     target: httpd-php-full
