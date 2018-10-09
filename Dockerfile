@@ -2,7 +2,7 @@ FROM ubuntu as httpd-php
 
 ENV DEBIAN_FRONTEND=noninteractive
 ARG php_version="5.6"
-ARG php_modules="soap bz2 calendar exif mysql opcache zip xsl intl mcrypt mbstring ldap sockets iconv gd"
+ARG php_modules="soap bz2 calendar exif mysql opcache zip xsl intl mcrypt mbstring ldap sockets iconv gd redis memcached"
 ARG run_deps="apache2 supervisor"
 
 ENV php_version=${php_version}
