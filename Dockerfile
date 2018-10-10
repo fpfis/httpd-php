@@ -3,22 +3,28 @@ FROM ubuntu as httpd-php
 ENV DEBIAN_FRONTEND=noninteractive
 ARG php_version="5.6"
 ARG php_modules="soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached"
-ARG run_deps="apache2 supervisor"
 
 ENV php_version=${php_version} \
     FPM_MAX_CHILDREN=5 \
     FPM_MIN_CHILDREN=2 \
     DAEMON_USER=www-data \
+    DAEMON_GROUP=www-data \
+    HTTP_PORT=8080 \
+    APACHE_ERROR_LOG=/dev/stderr \
+    APACHE_ACCESS_LOG=/dev/stdout \
+    PHP_ERROR_LOG=/dev/stderr \
     DOCUMENT_ROOT=/var/www/html
 
 ADD scripts /scripts
 RUN /scripts/install-base.sh
-ADD supervisor.conf /etc/supervisor/conf.d/services.conf
+ADD supervisor_conf /etc/supervisor/conf.d
 ADD apache2_conf /etc/apache2
 ADD php_conf /etc/php/${php_version}/mods-available
 ADD phpfpm_conf /etc/php/${php_version}/fpm/pool.d
-RUN phpenmod 90-common 95-prod
-RUN phpenmod -s cli 95-cli
+RUN phpenmod 90-common 95-prod && \
+    phpenmod -s cli 95-cli && \
+    a2enmod proxy_fcgi && \
+    a2enconf php prod
 ENTRYPOINT ["/scripts/run.sh"]
 
 
@@ -32,6 +38,7 @@ ARG composer_version="1.7.2"
 ARG drush_version="8.1.17"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN /scripts/install-dev.sh
-RUN phpdismod 95-prod
-RUN phpenmod 95-dev
+RUN /scripts/install-dev.sh && \
+    phpdismod 95-prod && \
+    phpenmod 95-dev && \
+    a2disconf prod
