@@ -12,18 +12,8 @@ set -e
 # Get our command to run
 export CMD=$@
 
-# If APACHE_EXTRA_CONF isn't being set outside, set it to an empty value. 
-if [ -z ${APACHE_EXTRA_CONF} ]; then export APACHE_EXTRA_CONF=""; fi
+[ ! -d /run/php ] && mkdir /run/php
+[ ! -d /run/apache2 ] && mkdir /run/apache2
 
-if [ -z "$CMD" ]; then
-  # If no run command provided, run supervisor as root a:
-  supervisor -nc /etc/supervisor/supervisord.conf 
-else
-  # Run the command as user web
-  if id -u www-data >/dev/null 2>&1;
-  then 
-    HOME=/tmp su www-data -c sh -c "$CMD"
-  else
-    eval "$CMD"
-  fi
-fi
+
+supervisord -nc /etc/supervisor/supervisord.conf

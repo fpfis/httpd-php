@@ -9,6 +9,13 @@ ENV php_version=${php_version}
 
 ADD scripts /scripts
 RUN /scripts/install-base.sh
+ADD supervisor.conf /etc/supervisor/conf.d/services.conf
+ADD apache2_conf /etc/apache2
+ADD php_conf /etc/php/${php_version}/mods-available
+ADD phpfpm_conf /etc/php/${php_version}/fpm/pool.d
+RUN phpenmod 90-common 95-prod
+RUN phpenmod -s cli 95-cli
+ENTRYPOINT ["/scripts/run.sh"]
 
 
 FROM httpd-php as httpd-php-full
@@ -22,3 +29,5 @@ ARG drush_version="8.1.17"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN /scripts/install-dev.sh
+RUN phpdismod 95-prod
+RUN phpendmod 95-dev
