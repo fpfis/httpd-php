@@ -1,10 +1,14 @@
+## Base PHP image :
+
 FROM ubuntu as httpd-php
 
+# Build arguments
 ENV DEBIAN_FRONTEND=noninteractive
 ARG php_version="5.6"
 ARG php_modules="soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached"
 ARG apache2_modules="proxy_fcgi rewrite"
 
+# Default configuration and environment
 ENV php_version=${php_version} \
     FPM_MAX_CHILDREN=5 \
     FPM_MIN_CHILDREN=2 \
@@ -17,24 +21,30 @@ ENV php_version=${php_version} \
     PHP_ERROR_LOG=/dev/stderr \
     DOCUMENT_ROOT=/var/www/html
 
+# Add our setup scripts and run the base one
 ADD scripts /scripts
 RUN /scripts/install-base.sh
+
+# Add our specific configuration
 ADD supervisor_conf /etc/supervisor/conf.d
 ADD apache2_conf /etc/apache2
 ADD php_conf /etc/php/${php_version}/mods-available
 ADD phpfpm_conf /etc/php/${php_version}/fpm/pool.d
+
+# Enable our specific configuration
 RUN phpenmod 90-common 95-prod && \
     phpenmod -s cli 95-cli && \
     a2enmod ${apache2_modules} && \
     a2enconf php prod
 ENTRYPOINT ["/scripts/run.sh"]
 
-
+## Full PHP images ( adds Java, OCI, and other heavy runtime libs )
 FROM httpd-php as httpd-php-full
 ARG oci8_version="2.0.12"
 ENV oci8_version=${oci8_version}
 RUN /scripts/install-full.sh
 
+## Based on the full image ( adds developement tools )
 FROM httpd-php-full as httpd-php-dev
 ARG composer_version="1.7.2"
 ARG drush_version="8.1.17"
