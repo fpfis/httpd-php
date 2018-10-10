@@ -16,9 +16,11 @@ ENV php_version=${php_version} \
     DAEMON_GROUP=www-data \
     HTTP_PORT=8080 \
     FPM_PORT=9000 \
-    APACHE_ERROR_LOG=/dev/stderr \
-    APACHE_ACCESS_LOG=/dev/stdout \
-    PHP_ERROR_LOG=/dev/stderr \
+    APACHE_ERROR_LOG=/proc/self/fd/2 \
+    APACHE_ACCESS_LOG=/proc/self/fd/1 \
+    PHP_MAX_EXECUTION_TIME=30 \
+    PHP_MAX_INPUT_TIME=30 \
+    PHP_MEMORY_LIMIT=512M \
     DOCUMENT_ROOT=/var/www/html
 
 # Add our setup scripts and run the base one
