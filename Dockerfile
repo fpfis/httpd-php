@@ -30,4 +30,4 @@ ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN /scripts/install-dev.sh
 RUN phpdismod 95-prod
-RUN phpendmod 95-dev
+RUN phpenmod 95-dev
