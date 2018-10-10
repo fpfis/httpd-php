@@ -5,9 +5,11 @@ ARG php_version="5.6"
 ARG php_modules="soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached"
 ARG run_deps="apache2 supervisor"
 
-ENV php_version=${php_version}
-ENV FPM_MAX_CHILDREN=5
-ENV FPM_MIN_CHILDREN=2
+ENV php_version=${php_version} \
+    FPM_MAX_CHILDREN=5 \
+    FPM_MIN_CHILDREN=2 \
+    DAEMON_USER=www-data \
+    DOCUMENT_ROOT=/var/www/html
 
 ADD scripts /scripts
 RUN /scripts/install-base.sh
