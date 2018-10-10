@@ -6,6 +6,8 @@ ARG php_modules="soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml m
 ARG run_deps="apache2 supervisor"
 
 ENV php_version=${php_version}
+ENV FPM_MAX_CHILDREN=5
+ENV FPM_MIN_CHILDREN=2
 
 ADD scripts /scripts
 RUN /scripts/install-base.sh
