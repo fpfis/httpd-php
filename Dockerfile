@@ -6,7 +6,9 @@ FROM ubuntu as httpd-php
 ENV DEBIAN_FRONTEND=noninteractive
 ARG php_version="5.6"
 ARG php_modules="soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached"
-ARG apache2_modules="proxy_fcgi rewrite"
+ARG apache2_modules="proxy_fcgi setenvif rewrite"
+ARG USER_ID=1000
+ARG GROUP_ID=1000
 
 # Default configuration and environment
 ENV php_version=${php_version} \
@@ -37,7 +39,7 @@ ADD phpfpm_conf /etc/php/${php_version}/fpm/pool.d
 RUN phpenmod 90-common 95-prod && \
     phpenmod -s cli 95-cli && \
     a2enmod ${apache2_modules} && \
-    a2enconf php prod
+    a2enconf php${php_version}-fpm prod
 ENTRYPOINT ["/scripts/run.sh"]
 
 ## Full PHP images ( adds Java, OCI, and other heavy runtime libs )

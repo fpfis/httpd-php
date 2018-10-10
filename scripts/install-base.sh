@@ -1,10 +1,14 @@
 #!bin/bash
 set -e
 set -x
+
+# Fix www-data uid/gid :
+usermod -u ${USER_ID} www-data
+groupmod -g ${GROUP_ID} www-data
+
 apt-get update
 apt-get install -y software-properties-common
 add-apt-repository -y ppa:ondrej/php
-
 
 for module in ${php_modules}; do
   if [ "${php_version}" == "7.2" ] && [ "${module}" == "mcrypt" ]; then
