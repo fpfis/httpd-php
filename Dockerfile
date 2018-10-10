@@ -17,7 +17,6 @@ ENV php_version=${php_version} \
     DAEMON_USER=www-data \
     DAEMON_GROUP=www-data \
     HTTP_PORT=8080 \
-    FPM_PORT=9000 \
     APACHE_ERROR_LOG=/proc/self/fd/2 \
     APACHE_ACCESS_LOG=/proc/self/fd/1 \
     PHP_MAX_EXECUTION_TIME=30 \
