@@ -3,6 +3,7 @@ FROM ubuntu as httpd-php
 ENV DEBIAN_FRONTEND=noninteractive
 ARG php_version="5.6"
 ARG php_modules="soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached"
+ARG apache2_modules="proxy_fcgi rewrite"
 
 ENV php_version=${php_version} \
     FPM_MAX_CHILDREN=5 \
@@ -24,7 +25,7 @@ ADD php_conf /etc/php/${php_version}/mods-available
 ADD phpfpm_conf /etc/php/${php_version}/fpm/pool.d
 RUN phpenmod 90-common 95-prod && \
     phpenmod -s cli 95-cli && \
-    a2enmod proxy_fcgi && \
+    a2enmod ${apache2_modules} && \
     a2enconf php prod
 ENTRYPOINT ["/scripts/run.sh"]
 
