@@ -5,7 +5,7 @@ FROM ubuntu as httpd-php
 # Build arguments
 ENV DEBIAN_FRONTEND=noninteractive
 ARG php_version="5.6"
-ARG php_modules="curl soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached"
+ARG php_modules="curl soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached tidy"
 ARG apache2_modules="proxy_fcgi setenvif rewrite"
 ARG USER_ID=1000
 ARG GROUP_ID=1000
