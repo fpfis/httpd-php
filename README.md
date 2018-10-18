@@ -1,2 +1,17 @@
 # httpd-php
-Apache + PHP Docker images
+Alpine 3.7 
+
+Apache + PHP 5.6 
+
+Monit
+
+Apache Variables:
+
+`DAEMON_USER` User that will run Apache and PHP. Defaults to www-data
+`DAEMON_GROUP` Daemon group. Defaults to www-data
+`DOCUMENT_ROOT` Document Root. Defaults to /var/www/html
+
+
+Module list:
+
+
