@@ -7,6 +7,7 @@ usermod -u ${USER_ID} www-data
 groupmod -g ${GROUP_ID} www-data
 
 apt-get update
+apt-get dist-upgrade -y
 apt-get install -y software-properties-common
 add-apt-repository -y ppa:ondrej/php
 
