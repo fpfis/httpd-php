@@ -59,7 +59,10 @@ pipeline:
   build-and-push-tag:
     image: plugins/docker
     repo: fpfis/${TARGET}
-    tags: [ ${PHP_VERSION}, ${DRONE_TAG%.*}, ${DRONE_TAG} ]
+    tags:
+    - ${PHP_VERSION}
+    - ${DRONE_TAG%.*}
+    - ${DRONE_TAG}
     target: ${TARGET}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     build_args:
