@@ -52,7 +52,8 @@ FROM httpd-php-full as httpd-php-dev
 ARG composer_version="1.7.2"
 ARG drush_version="8.1.17"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
-ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PHP_MEMORY_LIMIT=2G
 RUN /scripts/install-dev.sh && \
     phpdismod 95-prod && \
     phpenmod 95-dev && \
