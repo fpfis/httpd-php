@@ -4,7 +4,7 @@ set -x
 apt-get update
 
 # Install dev packages :
-apt-get install -y php${php_version}-xdebug wget unzip patch git
+apt-get install -y php${php_version}-xdebug wget curl nano unzip patch git
 
 # Install PHP dev packages :
 wget https://github.com/composer/composer/releases/download/${composer_version}/composer.phar -O /usr/bin/composer
