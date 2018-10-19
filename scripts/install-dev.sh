@@ -4,7 +4,7 @@ set -x
 apt-get update
 
 # Install dev packages :
-apt-get install -y wget ${dev_packages}
+apt-get install -y gnupg wget ${dev_packages}
 
 # Install blackfire :
 
