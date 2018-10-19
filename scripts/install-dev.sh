@@ -4,7 +4,14 @@ set -x
 apt-get update
 
 # Install dev packages :
-apt-get install -y php${php_version}-xdebug wget curl nano unzip patch git
+apt-get install -y wget ${dev_packages}
+
+# Install blackfire :
+
+wget -q -O - https://packagecloud.io/gpg.key | apt-key add -
+echo "deb http://packages.blackfire.io/debian any main" | tee /etc/apt/sources.list.d/blackfire.list
+apt-get update
+apt-get install -y blackfire-php
 
 # Install PHP dev packages :
 wget https://github.com/composer/composer/releases/download/${composer_version}/composer.phar -O /usr/bin/composer

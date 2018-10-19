@@ -5,7 +5,7 @@ apt-get update
 
 # Fix java installation
 mkdir -p /usr/share/man/man1
-apt-get install --no-install-recommends  -y libaio1 openjdk-8-jre-headless curl unzip mysql-client
+apt-get install --no-install-recommends -y libaio1 openjdk-8-jre-headless curl unzip mysql-client
 
 # OCI8 deps :
 curl https://repo.ne-dev.eu/deb/instantclient-basic-linux.x64-12.2.0.1.0.zip > /tmp/instantclient-basic-linux.zip 

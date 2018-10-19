@@ -51,6 +51,7 @@ RUN /scripts/install-full.sh
 FROM httpd-php-full as httpd-php-dev
 ARG composer_version="1.7.2"
 ARG drush_version="8.1.17"
+ARG dev_packages="wget curl nano unzip patch git rsync make php${PHP_VERSION}-xdebug"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV PHP_MEMORY_LIMIT=2G
