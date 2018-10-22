@@ -22,6 +22,7 @@ ENV php_version=${php_version} \
     PHP_MAX_EXECUTION_TIME=30 \
     PHP_MAX_INPUT_TIME=30 \
     PHP_MEMORY_LIMIT=512M \
+    SITE_PATH=/\
     DOCUMENT_ROOT=/var/www/html
 
 # Add our setup scripts and run the base one
