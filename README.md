@@ -42,6 +42,9 @@ From the full image, adds developer tools and settings.
 |`php_modules`     | List of PHP extensions to install              | `curl soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached tidy`
 |`oci8_version`    | Version of oci8 library to install (full)      | `2.0.12`
 |`apache2_modules` | List of Apache modules to enable after install | `proxy_fcgi setenvif rewrite`
+|`dev_packages`    | Additional packages to install the dev image   | `gnupg wget curl nano unzip patch git rsync make php${php_version}-xdebug`
+|`composer_version`| Version of Composer to install the dev image   | `1.7.2`
+|`drush_version`   | Version of Drush to install the dev image      | `8.1.17`
 |`USER_ID`         | User ID to use for Apache and PHP              | `1000`
 |`GROUP_ID`        | Group ID to use for Apache and PHP             | `1000`
 
@@ -54,6 +57,7 @@ From the full image, adds developer tools and settings.
 |`DAEMON_GROUP`              | Group name to run the daemons with | `www-data`        |
 |`DAEMON_USER`               | Username to run the daemons with   | `www-data`        |
 |`DOCUMENT_ROOT`             | Document root                      | `/var/www/html`   |
+|`SITE_PATH`                 | Site URL location                  | `/`
 |`FPM_MAX_CHILDREN`          | Max number of PHP processes        | `5`               |
 |`FPM_MIN_CHILDREN`          | Min number of PHP processes        | `2`               |
 |`HTTP_PORT`                 | Port to listen on                  | `8080`            |
