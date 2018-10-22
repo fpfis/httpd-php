@@ -5,48 +5,24 @@ environments.
 
 They are based on the latest Ubuntu LTS with the PHP packages from [Ondrej's PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php).
 
-## Contribute
-
-PR goes to the develop branch.
-
-Merging to the develop branch will release the image for testing.
-Merging the develop branch to master will release the image for production.
-Tagging the master branch will release a new php version in testing and production.
-
-## Build
-
-```bash
-docker build --build-arg php_version=5.6 --target httpd-php -t fpfis/httpd-php:5.6 .
-```
-
-## Build targets
-
-The [Dockerfile](Dockerfile) is a multistage file containing multiple targets to build :
-
-### httpd-php
+## Variants
+- fpfis/httpd-php:*<php-version>*
 
 Base image with prod settings.
 
-### httpd-php-full
+- fpfis/httpd-php-full:*<php-version>*
 
 From the base image, adds OCI and Java runtime.
 
-### httpd-php-dev
+- fpfis/httpd-php-dev:*<php-version>*
 
 From the full image, adds developer tools and settings.
 
-## Build arguments
-| arg              | Description                                    | Default  
-|------------------|------------------------------------------------|----------
-|`php_version`     | Version of php to build                        | `5.6`
-|`php_modules`     | List of PHP extensions to install              | `curl soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached tidy`
-|`oci8_version`    | Version of oci8 library to install (full)      | `2.0.12`
-|`apache2_modules` | List of Apache modules to enable after install | `proxy_fcgi setenvif rewrite`
-|`dev_packages`    | Additional packages to install the dev image   | `gnupg wget curl nano unzip patch git rsync make php${php_version}-xdebug`
-|`composer_version`| Version of Composer to install the dev image   | `1.7.2`
-|`drush_version`   | Version of Drush to install the dev image      | `8.1.17`
-|`USER_ID`         | User ID to use for Apache and PHP              | `1000`
-|`GROUP_ID`        | Group ID to use for Apache and PHP             | `1000`
+## Run
+
+```bash
+docker run -v $(pwd)/html:/var/www/html -e PHP_MEMORY_LIMIT=2G fpfis/httpd-php:5.6 .
+```
 
 ## Runtime docker configuration
 
@@ -64,3 +40,35 @@ From the full image, adds developer tools and settings.
 |`PHP_MAX_EXECUTION_TIME`    | PHP max execution time             | `30`              |
 |`PHP_MAX_INPUT_TIME`        | PHP max input time                 | `30`              |
 |`PHP_MEMORY_LIMIT`          | PHP memory limit                   | `512M`            |
+
+## Build
+
+```bash
+docker build --build-arg php_version=5.6 --target httpd-php -t fpfis/httpd-php:5.6 .
+```
+
+## Build targets
+
+The [Dockerfile](Dockerfile) is a multistage file containing multiple targets to build
+
+## Build arguments
+| arg              | Description                                    | Default  
+|------------------|------------------------------------------------|----------
+|`php_version`     | Version of php to build                        | `5.6`
+|`php_modules`     | List of PHP extensions to install              | `curl soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached tidy`
+|`oci8_version`    | Version of oci8 library to install (full)      | `2.0.12`
+|`apache2_modules` | List of Apache modules to enable after install | `proxy_fcgi setenvif rewrite`
+|`dev_packages`    | Additional packages to install the dev image   | `gnupg wget curl nano unzip patch git rsync make php${php_version}-xdebug`
+|`composer_version`| Version of Composer to install the dev image   | `1.7.2`
+|`drush_version`   | Version of Drush to install the dev image      | `8.1.17`
+|`USER_ID`         | User ID to use for Apache and PHP              | `1000`
+|`GROUP_ID`        | Group ID to use for Apache and PHP             | `1000`
+
+
+## Contribute
+
+PR goes to the develop branch.
+
+Merging to the develop branch will release the image for testing.
+Merging the develop branch to master will release the image for production.
+Tagging the master branch will release a new php version in testing and production.
