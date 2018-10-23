@@ -59,4 +59,5 @@ ENV PHP_MEMORY_LIMIT=2G
 RUN /scripts/install-dev.sh && \
     phpdismod 95-prod && \
     phpenmod 95-dev && \
-    a2disconf prod
+    a2disconf prod && \
+    a2enconf dev
