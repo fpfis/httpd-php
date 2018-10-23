@@ -25,4 +25,4 @@ apt-get autoremove software-properties-common -y --purge
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 
-ln -s /bin/true /usr/bin/sendmail
+ln -s /bin/true /usr/sbin/sendmail
