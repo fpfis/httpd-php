@@ -22,9 +22,9 @@ ENV php_version=${php_version} \
     PHP_MAX_EXECUTION_TIME=30 \
     PHP_MAX_INPUT_TIME=30 \
     PHP_MEMORY_LIMIT=512M \
-    SITE_PATH=/\
-    SMTP_FROM=root@localhost \
-    SMTP_HOST=localhost \
+    SITE_PATH=/ \
+    SMTP_PORT=25 \
+    SMTP_FROM=www-data@localhost \
     DOCUMENT_ROOT=/var/www/html
 
 # Add our setup scripts and run the base one
