@@ -2,15 +2,13 @@
 ## If no server is set , we're done
 [ -z "${SMTP_SERVER}" ] && exit 0
 
-## Else go for ssmtp
+## Else go for msmtp
 
-conf_file=$(mktemp)
+ARGS="--host=${SMTP_SERVER}"
 
-envsubst < /scripts/ssmtp.tpl > ${conf_file}
+[ ! -z "${SMTP_FROM}" ] && ARGS="${ARGS} -f ${SMTP_FROM}"
+[ ! -z "${SMTP_PORT}" ] && ARGS="${ARGS} --port ${SMTP_PORT}"
+[ ! -z "${SMTP_USERNAME}" ] && ARGS="${ARGS} --username=${SMTP_USERNAME}"
+[ ! -z "${SMTP_PASSWORD}" ] && ARGS="${ARGS} --passwordeval='echo ${SMTP_PASSWORD}'"
 
-ssmtp -C${conf_file} $@
-if [ $? -gt 0 ]; then
-  rm ${conf_file}
-  exit 1
-fi
-rm ${conf_file}
+msmtp ${ARGS} $@

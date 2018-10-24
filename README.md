@@ -33,7 +33,7 @@ docker run -v $(pwd)/html:/var/www/html -e PHP_MEMORY_LIMIT=2G fpfis/httpd-php:5
 |`DAEMON_GROUP`              | Group name to run the daemons with | `www-data`        |
 |`DAEMON_USER`               | Username to run the daemons with   | `www-data`        |
 |`DOCUMENT_ROOT`             | Document root                      | `/var/www/html`   |
-|`SITE_PATH`                 | Site URL location                  | `/`
+|`SITE_PATH`                 | Site URL location (non-dev)        | `/`
 |`FPM_MAX_CHILDREN`          | Max number of PHP processes        | `5`               |
 |`FPM_MIN_CHILDREN`          | Min number of PHP processes        | `2`               |
 |`HTTP_PORT`                 | Port to listen on                  | `8080`            |
@@ -41,8 +41,10 @@ docker run -v $(pwd)/html:/var/www/html -e PHP_MEMORY_LIMIT=2G fpfis/httpd-php:5
 |`PHP_MAX_INPUT_TIME`        | PHP max input time                 | `30`              |
 |`PHP_MEMORY_LIMIT`          | PHP memory limit                   | `512M`            |
 |`SMTP_SERVER`               | SMTP server to use                 | empty
-|`SMTP_FROM`                 | SMTP From to use                   | `root@localhost`
-|`SMTP_HOSTNAME`             | Hostname to report to SMTP server  | `localhost`
+|`SMTP_PORT  `               | SMTP port   to use                 | `25`
+|`SMTP_FROM`                 | SMTP From to use                   | empty
+|`SMTP_USERNAME`             | Username to use for SMTP auth      | empty
+|`SMTP_PASSWORD`             | Password to use for SMTP auth      | empty
 
 ## Build
 

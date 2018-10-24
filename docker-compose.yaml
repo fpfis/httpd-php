@@ -1,0 +1,19 @@
+version: '2.3'
+services:
+  web:
+    build:
+      context: .
+      target: httpd-php
+      args:
+        php_version: 7.1
+    environment:
+      - SMTP_SERVER=mailhog
+      - SMTP_PORT=1025
+    ports:
+      - 8080:8080
+    volumes:
+      - ./test:/var/www/html
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025

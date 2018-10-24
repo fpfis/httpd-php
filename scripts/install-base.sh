@@ -19,7 +19,7 @@ for module in ${php_modules}; do
   modules="php${php_version}-${module} ${modules}"
 done
 
-apt-get install -y supervisor apache2 php${php_version}-fpm ${modules} ssmtp gettext-base
+apt-get install -y supervisor apache2 php${php_version}-fpm ${modules} msmtp
 
 apt-get autoremove software-properties-common -y --purge
 apt-get clean
