@@ -25,7 +25,9 @@ ENV php_version=${php_version} \
     SITE_PATH=/ \
     SMTP_PORT=25 \
     SMTP_FROM=www-data@localhost \
-    DOCUMENT_ROOT=/var/www/html
+    DOCUMENT_ROOT=/var/www/html \
+    APACHE_EXTRA_CONF="" \
+    APACHE_EXTRA_CONF_DIR=""
 
 # Add our setup scripts and run the base one
 ADD scripts /scripts

@@ -45,6 +45,8 @@ docker run -v $(pwd)/html:/var/www/html -e PHP_MEMORY_LIMIT=2G fpfis/httpd-php:5
 |`SMTP_FROM`                 | SMTP From to use                   | empty
 |`SMTP_USERNAME`             | Username to use for SMTP auth      | empty
 |`SMTP_PASSWORD`             | Password to use for SMTP auth      | empty
+|`APACHE_EXTRA_CONF`         | Adds a line in apache2.conf        | empty
+|`APACHE_EXTRA_CONF_DIR`     | Includes an apache config dir      | empty
 
 ## Build
 
