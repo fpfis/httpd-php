@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ENV PHP_VERSION 7.2
+ENV PHP_VERSION 7.2 
 ENV DOCUMENT_ROOT /var/www/html
 ENV PORT 8080
 ENV APACHE_EXTRA_CONF ""
@@ -13,7 +13,7 @@ ENV FPM_MAX_CHILDREN 30
 ENV FPM_MAX_REQUESTS 500
 ENV PHP_ERROR_LOG /dev/fd/2
 ENV PHP_DISPLAY_ERRORS Off
-ENV SUPERVISORD_CONF_DIR /etc/supervisord/
+ENV SUPERVISOR_CONF_DIR /etc/supervisor/
 ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 ENV DEBIAN_FRONTEND=noninteractive
@@ -37,9 +37,9 @@ RUN rm -rf /etc/apache2/sites-* /etc/apache2/conf-* /etc/apache2/ports.conf /etc
 ### Add httpd && clean upstream config
 ADD conf/apache2/ /etc/apache2/
 
-### Add supervisord
+### Add supervisor
 RUN apt-get install supervisor -y
-COPY conf/supervisord/ /etc/supervisord/
+COPY conf/supervisor/ /etc/supervisor/
 ADD run.sh /
 
 EXPOSE 8080
