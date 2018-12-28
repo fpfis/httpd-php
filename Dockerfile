@@ -29,10 +29,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 
 ### Configure php/php-fpm
 ADD conf/phpfpm/ /etc/php/$PHP_VERSION/fpm/
-ADD conf/php/ /etc/php/${PHP_VERSION}/conf.d/
+ADD conf/php/ /etc/php/$PHP_VERSION/fpm/conf.d/
 
 ### Cleanup php/apache configuration
-RUN rm -rf /etc/apache2/sites-* /etc/apache2/conf-* /etc/apache2/ports.conf /etc/apache2/mods-* /etc/php/$PHP_VERSION/fpm/conf.d/20-exif.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-readline.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-shmop.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-sysv*.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-wddx.ini
+RUN rm -rf /etc/apache2/sites-* /etc/apache2/conf-* /etc/apache2/ports.conf /etc/apache2/mods-* /etc/php/$PHP_VERSION/fpm/conf.d/20-exif.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-readline.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-shmop.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-sysv*.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-wddx.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-igbinary.ini
 
 ### Add httpd && clean upstream config
 ADD conf/apache2/ /etc/apache2/
