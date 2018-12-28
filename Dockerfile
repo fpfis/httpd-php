@@ -1,5 +1,6 @@
 FROM ubuntu:18.04
 
+ENV PHP_VERSION 7.2
 ENV DOCUMENT_ROOT /var/www/html
 ENV PORT 8080
 ENV APACHE_EXTRA_CONF ""
@@ -15,36 +16,34 @@ ENV PHP_DISPLAY_ERRORS Off
 ENV SUPERVISORD_CONF_DIR /etc/supervisord/
 ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
+ENV DEBIAN_FRONTEND=noninteractive
 
 ### Add ssmtp, bash, git
 #RUN apk add --no-cache ssmtp bash git && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
 
-### Install PHP Modules
-RUN apt-get install -y php7.2 php7.2-cli php7.2-fpm php7.2-soap php7.2-bz2 php7.2-opcache php7.2-zip php7.2-xsl php7.2-intl php7.2-mbstring php7.2-ldap php7.2-mysql php7.2-gd  
+### Configure timezone
+RUN apt-get update && apt-get install -y tzdata && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
+
+### Install Apache / PHP/FPM (including modules)
+RUN apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} php${PHP_VERSION}-common php${PHP_VERSION}-cli php${PHP_VERSION}-fpm php${PHP_VERSION}-soap php${PHP_VERSION}-bz2 php${PHP_VERSION}-opcache php${PHP_VERSION}-zip php${PHP_VERSION}-xsl php${PHP_VERSION}-intl php${PHP_VERSION}-mbstring php${PHP_VERSION}-ldap php${PHP_VERSION}-mysql php${PHP_VERSION}-gd php${PHP_VERSION}-memcached php${PHP_VERSION}-redis php${PHP_VERSION}-curl php${PHP_VERSION}-sqlite php${PHP_VERSION}-bcmath -y
 
 ### Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-### Install php-fpm
-ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
-ADD php_conf/ /usr/local/etc/php/conf.d/
+### Configure php/php-fpm
+ADD phpfpm_conf/php-fpm.conf /etc/php/${PHP_VERSION}/fpm/
+ADD php_conf/ /etc/php/${PHP_VERSION}/conf.d/
+
+### Cleanup php/apache configuration
+RUN rm -rf /etc/apache2/sites-* /etc/apache2/conf-* /etc/apache2/ports.conf /etc/apache2/mods-* /etc/php/7.2/fpm/conf.d/20-exif.ini /etc/php/7.2/fpm/conf.d/20-msgpack.ini /etc/php/7.2/fpm/conf.d/20-readline.ini /etc/php/7.2/fpm/conf.d/20-shmop.ini /etc/php/7.2/fpm/conf.d/20-sysv*.ini /etc/php/7.2/fpm/conf.d/20-wddx.ini
 
 ### Add httpd && clean upstream config
-RUN apk add --no-cache apache2 apache2-utils apache2-proxy && ln -s /usr/lib/apache2/ /etc/apache2/modules && rm /etc/apache2/conf.d/mpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf /etc/apache2/conf.d/proxy.conf
 ADD apache2_conf/ /etc/apache2/
 
-### Fix iconv
-RUN apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
-
 ### Add supervisord
-COPY --from=ochinchina/supervisord:latest /usr/local/bin/supervisord /usr/bin/supervisord
-RUN mkdir /etc/supervisord
+RUN apt-get install supervisor -y
 COPY supervisord_conf/ /etc/supervisord/
 ADD run.sh /
-
-# Fixing timezone
-ADD localtime /etc/localtime
 
 EXPOSE 8080
 EXPOSE 9001
