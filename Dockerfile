@@ -28,18 +28,18 @@ RUN apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} php${PHP_VERS
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 ### Configure php/php-fpm
-ADD phpfpm_conf/php-fpm.conf /etc/php/$PHP_VERSION/fpm/
-ADD php_conf/ /etc/php/${PHP_VERSION}/conf.d/
+ADD conf/phpfpm/ /etc/php/$PHP_VERSION/fpm/
+ADD conf/php/ /etc/php/${PHP_VERSION}/conf.d/
 
 ### Cleanup php/apache configuration
 RUN rm -rf /etc/apache2/sites-* /etc/apache2/conf-* /etc/apache2/ports.conf /etc/apache2/mods-* /etc/php/$PHP_VERSION/fpm/conf.d/20-exif.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-msgpack.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-readline.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-shmop.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-sysv*.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-wddx.ini
 
 ### Add httpd && clean upstream config
-ADD apache2_conf/ /etc/apache2/
+ADD conf/apache2/ /etc/apache2/
 
 ### Add supervisord
 RUN apt-get install supervisor -y
-COPY supervisord_conf/ /etc/supervisord/
+COPY conf/supervisord/ /etc/supervisord/
 ADD run.sh /
 
 EXPOSE 8080
