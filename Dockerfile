@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine
+FROM ubuntu:18.04
 
 ENV DOCUMENT_ROOT /var/www/html
 ENV PORT 8080
@@ -17,11 +17,15 @@ ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 
 ### Add ssmtp, bash, git
-RUN apk add --no-cache ssmtp bash git && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
+#RUN apk add --no-cache ssmtp bash git && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
 
-### Install PHP Modules/Composer
-ADD install-ext-modules.sh /install-ext-modules.sh
-RUN /install-ext-modules.sh && ln -s /usr/local/etc/ /etc/php && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+### Install PHP Modules
+RUN apt-get install -y php7.2 php7.2-cli php7.2-fpm php7.2-soap php7.2-bz2 php7.2-opcache php7.2-zip php7.2-xsl php7.2-intl php7.2-mbstring php7.2-ldap php7.2-mysql php7.2-gd  
+
+### Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+
+### Install php-fpm
 ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
 ADD php_conf/ /usr/local/etc/php/conf.d/
 

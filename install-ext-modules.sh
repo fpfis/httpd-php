@@ -5,6 +5,7 @@ set -xue
 modules="soap bz2 calendar exif pdo_mysql opcache zip xsl intl mbstring ldap sockets "
 
 #Dumb list of dev dependencies...
+apt-get install -y php7.2 php7.2-cli php7.2-fpm php7.2-soap php7.2-bz2 php7.2-opcache php7.2-zip php7.2-xsl php7.2-intl php7.2-mbstring php7.2-ldap php7.2-mysql php7.2-gd  
 makedepends="
 	autoconf
 	apache2-dev
