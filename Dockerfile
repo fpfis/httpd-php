@@ -18,11 +18,8 @@ ENV DAEMON_USER "www-data"
 ENV DAEMON_GROUP "www-data"
 ENV DEBIAN_FRONTEND=noninteractive
 
-### Add ssmtp, bash, git
-RUN apt-get install ssmtp git curl && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
-
-### Configure timezone
-RUN apt-get update && apt-get install -y tzdata && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
+### Configure timezone / adding 
+RUN apt-get update && apt-get install -y tzdata ssmtp git curl && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
 
 ### Install Apache / PHP/FPM (including modules)
 RUN apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} php${PHP_VERSION}-common php${PHP_VERSION}-cli php${PHP_VERSION}-fpm php${PHP_VERSION}-soap php${PHP_VERSION}-bz2 php${PHP_VERSION}-opcache php${PHP_VERSION}-zip php${PHP_VERSION}-xsl php${PHP_VERSION}-intl php${PHP_VERSION}-mbstring php${PHP_VERSION}-ldap php${PHP_VERSION}-mysql php${PHP_VERSION}-gd php${PHP_VERSION}-memcached php${PHP_VERSION}-redis php${PHP_VERSION}-curl php${PHP_VERSION}-sqlite php${PHP_VERSION}-bcmath -y
