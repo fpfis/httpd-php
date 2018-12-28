@@ -28,7 +28,7 @@ RUN apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} php${PHP_VERS
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 ### Configure php/php-fpm
-ADD phpfpm_conf/ /etc/php/${PHP_VERSION}/fpm/
+ADD phpfpm_conf/php-fpm.conf /etc/php/$PHP_VERSION/fpm/
 ADD php_conf/ /etc/php/${PHP_VERSION}/conf.d/
 
 ### Cleanup php/apache configuration
