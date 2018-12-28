@@ -19,7 +19,7 @@ ENV DAEMON_GROUP "www-data"
 ENV DEBIAN_FRONTEND=noninteractive
 
 ### Add ssmtp, bash, git
-#RUN apk add --no-cache ssmtp bash git && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
+RUN apt-get install ssmtp git curl && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
 
 ### Configure timezone
 RUN apt-get update && apt-get install -y tzdata && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
@@ -31,11 +31,11 @@ RUN apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} php${PHP_VERS
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 ### Configure php/php-fpm
-ADD phpfpm_conf/php-fpm.conf /etc/php/${PHP_VERSION}/fpm/
+ADD phpfpm_conf/ /etc/php/${PHP_VERSION}/fpm/
 ADD php_conf/ /etc/php/${PHP_VERSION}/conf.d/
 
 ### Cleanup php/apache configuration
-RUN rm -rf /etc/apache2/sites-* /etc/apache2/conf-* /etc/apache2/ports.conf /etc/apache2/mods-* /etc/php/7.2/fpm/conf.d/20-exif.ini /etc/php/7.2/fpm/conf.d/20-msgpack.ini /etc/php/7.2/fpm/conf.d/20-readline.ini /etc/php/7.2/fpm/conf.d/20-shmop.ini /etc/php/7.2/fpm/conf.d/20-sysv*.ini /etc/php/7.2/fpm/conf.d/20-wddx.ini
+RUN rm -rf /etc/apache2/sites-* /etc/apache2/conf-* /etc/apache2/ports.conf /etc/apache2/mods-* /etc/php/$PHP_VERSION/fpm/conf.d/20-exif.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-msgpack.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-readline.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-shmop.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-sysv*.ini /etc/php/$PHP_VERSION/fpm/conf.d/20-wddx.ini
 
 ### Add httpd && clean upstream config
 ADD apache2_conf/ /etc/apache2/
