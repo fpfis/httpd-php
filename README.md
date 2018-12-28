@@ -1,5 +1,5 @@
 # httpd-php
-Alpine 3.7 
+Ubuntu 18.04 
 
 Apache + PHP 7.2
 Supervisord
