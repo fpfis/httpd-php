@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 
 ENV DOCUMENT_ROOT="/var/www/html" PORT=8080 APACHE_EXTRA_CONF="" APACHE_EXTRA_CONF_DIR="" APACHE_ERROR_LOG="/dev/stderr" APACHE_ACCESS_LOG="/dev/stdout"
-ENV PHP_VERSION="7.2" FPM_START_SERVERS=20 FPM_MIN_CHILDREN=10 FPM_MAX_CHILDREN=30 FPM_MAX_REQUESTS=500 PHP_ERROR_LOG="/dev/stderr" PHP_DISPLAY_ERRORS="Off" PHP_DEPENDENCIES="(common cli fpm soap bz2 opcache zip xsl intl mbstring ldap mysql gd memcached redis curl sqlite bcmath)"
+ENV PHP_VERSION="7.2" FPM_START_SERVERS=20 FPM_MIN_CHILDREN=10 FPM_MAX_CHILDREN=30 FPM_MAX_REQUESTS=500 PHP_ERROR_LOG="/dev/stderr" PHP_DISPLAY_ERRORS="Off" PHP_DEPENDENCIES=(common cli fpm soap bz2 opcache zip xsl intl mbstring ldap mysql gd memcached redis curl sqlite bcmath)
 ENV SUPERVISOR_CONF_DIR="/etc/supervisor/" DAEMON_USER="www-data" DAEMON_GROUP="www-data" DEBIAN_FRONTEND="noninteractive"
 
 ### Configure timezone / adding ssmtp / default dep
