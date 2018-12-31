@@ -1,48 +1,32 @@
-FROM php:7.2-fpm-alpine
+FROM ubuntu:18.04
 
-ENV DOCUMENT_ROOT /var/www/html
-ENV PORT 8080
-ENV APACHE_EXTRA_CONF ""
-ENV APACHE_EXTRA_CONF_DIR ""
-ENV APACHE_ERROR_LOG /dev/fd/2
-ENV APACHE_ACCESS_LOG /dev/fd/1
-ENV FPM_START_SERVERS 20
-ENV FPM_MIN_CHILDREN 10
-ENV FPM_MAX_CHILDREN 30
-ENV FPM_MAX_REQUESTS 500
-ENV PHP_ERROR_LOG /dev/fd/2
-ENV PHP_DISPLAY_ERRORS Off
-ENV SUPERVISORD_CONF_DIR /etc/supervisord/
-ENV DAEMON_USER "www-data"
-ENV DAEMON_GROUP "www-data"
+ENV TIMEOUT=120 DOCUMENT_ROOT="/var/www/html" PORT=8080 APACHE_EXTRA_CONF="" APACHE_EXTRA_CONF_DIR="" APACHE_ERROR_LOG="/var/log/apache2/error" APACHE_ACCESS_LOG="/var/log/apache2/access"
+ENV PHP_VERSION="7.2" FPM_START_SERVERS=20 FPM_MIN_CHILDREN=10 FPM_MAX_CHILDREN=30 FPM_MAX_REQUESTS=500 PHP_ERROR_LOG="/var/log/php/errors" PHP_DISPLAY_ERRORS="Off" PHP_DEPENDENCIES="common cli fpm soap bz2 opcache zip xsl intl imap mbstring ldap mysql gd memcached redis curl sqlite bcmath"
+ENV SUPERVISOR_CONF_DIR="/etc/supervisor/" DAEMON_USER="www-data" DAEMON_GROUP="www-data" DEBIAN_FRONTEND="noninteractive"
 
-### Add ssmtp, bash, git
-RUN apk add --no-cache ssmtp bash git && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf
+### Configure timezone / adding ssmtp / default dep
+RUN apt-get update && apt-get install cronolog tzdata ssmtp git curl vim supervisor -y && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
 
-### Install PHP Modules/Composer
-ADD install-ext-modules.sh /install-ext-modules.sh
-RUN /install-ext-modules.sh && ln -s /usr/local/etc/ /etc/php && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
-ADD phpfpm_conf/www.conf /etc/php/php-fpm.d/
-ADD php_conf/ /usr/local/etc/php/conf.d/
+### Install Apache / PHP/FPM (including modules)
+RUN apt-cache madison php | grep -q "1:${PHP_VERSION}+" && apt-get install apache2 php${PHP_VERSION} -y && apt-get install `for PHP_DEPENDENCY in ${PHP_DEPENDENCIES}; do echo -n "php${PHP_VERSION}-${PHP_DEPENDENCY} "; done` -y; phpdismod exif readline shmop sysvmsg sysvsem sysvshm wddx;
 
-### Add httpd && clean upstream config
-RUN apk add --no-cache apache2 apache2-utils apache2-proxy && ln -s /usr/lib/apache2/ /etc/apache2/modules && rm /etc/apache2/conf.d/mpm.conf /usr/local/etc/php-fpm.d/zz-docker.conf /etc/apache2/conf.d/proxy.conf
-ADD apache2_conf/ /etc/apache2/
+### Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
-### Fix iconv
-RUN apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+### Configure php/php-fpm
+ADD conf/php-fpm/ /etc/php/$PHP_VERSION/fpm/
+ADD conf/php/ /etc/php/$PHP_VERSION/fpm/conf.d/
 
-### Add supervisord
-COPY --from=ochinchina/supervisord:latest /usr/local/bin/supervisord /usr/bin/supervisord
-RUN mkdir /etc/supervisord
-COPY supervisord_conf/ /etc/supervisord/
+### Revamp apache configuration
+ADD conf/apache2/ /etc/apache2/
+
+### Cleanup php/apache configuration
+RUN a2enmod proxy_fcgi rewrite headers; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default
+
+### Adding supervisor configuration
+COPY conf/supervisor/ /etc/supervisor/
 ADD run.sh /
 
-# Fixing timezone
-ADD localtime /etc/localtime
-
-EXPOSE 8080
-EXPOSE 9001
+EXPOSE 8080 9001
 
 ENTRYPOINT ["/run.sh"]
