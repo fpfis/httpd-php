@@ -21,7 +21,7 @@ ADD conf/php/ /etc/php/$PHP_VERSION/fpm/conf.d/
 ADD conf/apache2/ /etc/apache2/
 
 ### Cleanup php/apache configuration
-RUN phpdismod exif readline shmop sysvmsg sysvsem sysvshm wddx igbinary; a2enmod proxy_fcgi rewrite headers; a2dismod; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default
+RUN phpdismod exif readline shmop sysvmsg sysvsem sysvshm wddx igbinary; a2enmod proxy_fcgi rewrite headers; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default
 
 ### Adding supervisor configuration
 COPY conf/supervisor/ /etc/supervisor/
