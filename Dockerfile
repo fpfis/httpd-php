@@ -22,7 +22,7 @@ RUN phpdismod exif readline shmop sysvmsg sysvsem sysvshm wddx igbinary
 ADD conf/apache2/ /etc/apache2/
 
 ### Cleanup apache configuration
-RUNi a2enmod proxy_fcgi rewrite headers; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default; sync
+RUN a2enmod proxy_fcgi rewrite headers; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default; sync
 
 ### Adding supervisor configuration
 COPY conf/supervisor/ /etc/supervisor/
