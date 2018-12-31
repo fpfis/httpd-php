@@ -9,7 +9,7 @@ ENV SUPERVISOR_CONF_DIR="/etc/supervisor/" DAEMON_USER="www-data" DAEMON_GROUP="
 RUN apt-get update && apt-get install tzdata ssmtp git curl vim supervisor -y && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
 
 ### Install Apache / PHP/FPM (including modules)
-RUN apt-cache madison php | grep "1:${PHP_VERSION}+" && apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} -y && for PHP_DEPENDENCY in ${PHP_DEPENDENCIES}; do apt-get install php${PHP_VERSION}-${PHP_DEPENDENCY} -y; done
+RUN apt-cache madison php | grep "1:${PHP_VERSION}+" && apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} -y && apt-get install `for PHP_DEPENDENCY in ${PHP_DEPENDENCIES}; do echo -n "php${PHP_VERSION}-${PHP_DEPENDENCY} "; done` -y
 
 ### Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
