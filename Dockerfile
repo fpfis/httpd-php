@@ -8,7 +8,7 @@ ENV SUPERVISOR_CONF_DIR="/etc/supervisor/" DAEMON_USER="www-data" DAEMON_GROUP="
 RUN apt-get update && apt-get install cronolog tzdata ssmtp git curl vim supervisor -y && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
 
 ### Install Apache / PHP/FPM (including modules)
-RUN apt-cache madison php | grep -q "1:${PHP_VERSION}+" && apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} -y && apt-get install `for PHP_DEPENDENCY in ${PHP_DEPENDENCIES}; do echo -n "php${PHP_VERSION}-${PHP_DEPENDENCY} "; done` -y
+RUN apt-cache madison php | grep -q "1:${PHP_VERSION}+" && apt-get install apache2 php${PHP_VERSION} -y && apt-get install `for PHP_DEPENDENCY in ${PHP_DEPENDENCIES}; do echo -n "php${PHP_VERSION}-${PHP_DEPENDENCY} "; done` -y
 
 ### Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
@@ -21,7 +21,7 @@ ADD conf/php/ /etc/php/$PHP_VERSION/fpm/conf.d/
 ADD conf/apache2/ /etc/apache2/
 
 ### Cleanup php/apache configuration
-RUN a2enmod proxy_fcgi rewrite headers; a2dismod fcgid; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default; phpdismod exif readline shmop sysvmsg sysvsem sysvshm wddx igbinary
+RUN phpdismod exif readline shmop sysvmsg sysvsem sysvshm wddx igbinary; a2enmod proxy_fcgi rewrite headers; a2dismod; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default
 
 ### Adding supervisor configuration
 COPY conf/supervisor/ /etc/supervisor/
