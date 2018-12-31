@@ -17,11 +17,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 ADD conf/php-fpm/ /etc/php/$PHP_VERSION/fpm/
 ADD conf/php/ /etc/php/$PHP_VERSION/fpm/conf.d/
 
-### Cleanup php/apache configuration
-RUN rm -rvf /etc/apache2/sites-* /etc/apache2/conf-* /etc/apache2/ports.conf /etc/apache2/mods-* /etc/php/*/fpm/conf.d/20-exif.ini /etc/php/*/fpm/conf.d/20-readline.ini /etc/php/*/fpm/conf.d/20-shmop.ini /etc/php/*/fpm/conf.d/20-sysv*.ini /etc/php/*/fpm/conf.d/20-wddx.ini /etc/php/*/fpm/conf.d/20-igbinary.ini
-
 ### Revamp apache configuration
 ADD conf/apache2/ /etc/apache2/
+
+### Cleanup php/apache configuration
+RUN a2enmod proxy_fcgi rewrite headers && a2dismod fcgid && a2disconf php7.2-fpm && a2dissite 000-default && phpdismod exif readline shmop sysvmsg sysvsem sysvshm wddx igbinary
 
 ### Adding supervisor configuration
 COPY conf/supervisor/ /etc/supervisor/
