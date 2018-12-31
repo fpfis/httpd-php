@@ -22,13 +22,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y tzdata ssmtp git curl && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
 
 ### Install Apache / PHP/FPM (including modules)
-RUN apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} php${PHP_VERSION}-common php${PHP_VERSION}-cli php${PHP_VERSION}-fpm php${PHP_VERSION}-soap php${PHP_VERSION}-bz2 php${PHP_VERSION}-opcache php${PHP_VERSION}-zip php${PHP_VERSION}-xsl php${PHP_VERSION}-intl php${PHP_VERSION}-mbstring php${PHP_VERSION}-ldap php${PHP_VERSION}-mysql php${PHP_VERSION}-gd php${PHP_VERSION}-memcached php${PHP_VERSION}-redis php${PHP_VERSION}-curl php${PHP_VERSION}-sqlite php${PHP_VERSION}-bcmath -y
+RUN apt-cache madison php | grep '1:${PHP_VERSION}+' && apt-get install apache2 libapache2-mod-fcgid php${PHP_VERSION} php${PHP_VERSION}-common php${PHP_VERSION}-cli php${PHP_VERSION}-fpm php${PHP_VERSION}-soap php${PHP_VERSION}-bz2 php${PHP_VERSION}-opcache php${PHP_VERSION}-zip php${PHP_VERSION}-xsl php${PHP_VERSION}-intl php${PHP_VERSION}-mbstring php${PHP_VERSION}-ldap php${PHP_VERSION}-mysql php${PHP_VERSION}-gd php${PHP_VERSION}-memcached php${PHP_VERSION}-redis php${PHP_VERSION}-curl php${PHP_VERSION}-sqlite php${PHP_VERSION}-bcmath -y
 
 ### Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 ### Configure php/php-fpm
-ADD conf/phpfpm/ /etc/php/$PHP_VERSION/fpm/
+ADD conf/php-fpm/ /etc/php/$PHP_VERSION/fpm/
 ADD conf/php/ /etc/php/$PHP_VERSION/fpm/conf.d/
 
 ### Cleanup php/apache configuration
