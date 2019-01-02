@@ -29,14 +29,15 @@
 |`PHP_DISPLAY_ERRORS`|display_errors                                                        |`Off`
 |`PHP_DEPENDENCIES`  |Modules to install                                                    |`Available on bottom`
 ### Supervisor
-| Variable            | Description                     |  Default
-|---------------------|---------------------------------|------------------
-|`SUPERVISOR_LOG_PATH`|log path                         |`/var/log/`
-|`SUPERVISOR_CONF_DIR`|conf path                        |`/etc/supervisor/`
-|`DAEMON_USER`        |User that will run Apache and PHP|`www-data`
-|`DAEMON_GROUP`       |Daemon group                     |`www-data`
-|`SUPERVISORCTL_USER` |GUI user                         |`admin`
-|`SUPERVISORCTL_PASS` |GUI password                     |`password`
+| Variable                  | Description                     |  Default
+|---------------------------|---------------------------------|------------------
+|`SUPERVISOR_LOG_PATH`      |log path                         |`/var/log/`
+|`SUPERVISOR_CONF_DIR`      |conf path                        |`/etc/supervisor/`
+|`DAEMON_USER`              |User that will run Apache and PHP|`www-data`
+|`DAEMON_GROUP`             |Daemon group                     |`www-data`
+|`SUPERVISORCTL_LISTEN_PORT`|Listen Port                |`9002`
+|`SUPERVISORCTL_USER`       |GUI user                         |`admin`
+|`SUPERVISORCTL_PASS`       |GUI password                     |`password`
 
 ## PHP modules
 * common
