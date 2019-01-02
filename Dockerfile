@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 ENV TIMEOUT=120 DOCUMENT_ROOT="/var/www/html" PORT=8080 APACHE_EXTRA_CONF="" APACHE_EXTRA_CONF_DIR="" APACHE_ERROR_LOG="/var/log/apache.err" APACHE_ACCESS_LOG="/var/log/access"
 ENV PHP_VERSION="7.2" FPM_START_SERVERS=20 FPM_MIN_CHILDREN=10 FPM_MAX_CHILDREN=30 FPM_MAX_REQUESTS=500 PHP_ERROR_LOG="/var/log/php.err" PHP_DISPLAY_ERRORS="Off" PHP_DEPENDENCIES="common cli fpm soap bz2 opcache zip xsl intl imap mbstring ldap mysql gd memcached redis curl sqlite bcmath"
-ENV SUPERVISOR_LOG_PATH="/var/log/" SUPERVISOR_CONF_DIR="/etc/supervisor/" DAEMON_USER="www-data" DAEMON_GROUP="www-data" SUPERVISORCTL_USER="admin" SUPERVISORCTL_PASS="password" DEBIAN_FRONTEND="noninteractive"
+ENV SUPERVISOR_LOG_PATH="/var/log/" SUPERVISOR_CONF_DIR="/etc/supervisor/" DAEMON_USER="www-data" DAEMON_GROUP="www-data" SUPERVISORCTL_LISTEN_PORT="9001" SUPERVISORCTL_USER="admin" SUPERVISORCTL_PASS="password" DEBIAN_FRONTEND="noninteractive"
 
 ### Configure timezone / adding ssmtp / default dep
 RUN apt-get update && apt-get install cronolog tzdata ssmtp git curl supervisor -y && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
@@ -27,6 +27,6 @@ RUN a2enmod proxy_fcgi rewrite headers; a2disconf php7.2-fpm other-vhosts-access
 COPY conf/supervisor/ /etc/supervisor/
 ADD run.sh /
 
-EXPOSE 8080 9001
+EXPOSE ${PORT} ${SUPERVISORCTL_LISTEN_PORT}
 
 ENTRYPOINT ["/run.sh"]
