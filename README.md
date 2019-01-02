@@ -1,6 +1,5 @@
 # httpd-php/7.2-wt
-[![build status](https://drone.fpfis.eu/api/badges/fpfis/httpd-php/status.svg?branch=release/7.2-wt)](https://drone.fpfis.eu/fpfis/httpd-php)</br>
-[![last commit](https://img.shields.io/github/last-commit/fpfis/httpd-php/release/7.2-wt.svg)](https://github.com/fpfis/httpd-php/tree/release/7.2-wt)
+[![build status](https://drone.fpfis.eu/api/badges/fpfis/httpd-php/status.svg?branch=release/7.2-wt)](https://drone.fpfis.eu/fpfis/httpd-php)[![last commit](https://img.shields.io/github/last-commit/fpfis/httpd-php/release/7.2-wt.svg)](https://github.com/fpfis/httpd-php/tree/release/7.2-wt)][![image size](https://img.shields.io/microbadger/image-size/fpfis/httpd-php/7.2-wt.svg)]|![layer](https://img.shields.io/microbadger/layers/fpfis/httpd-php/7.2-wt.svg)]
 
 ## Description
 * Ubuntu 18.04
