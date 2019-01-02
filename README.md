@@ -1,6 +1,7 @@
 # httpd-php/7.2-wt
 [![](https://img.shields.io/badge/Status-:-orange.svg)]()
-[![build status](https://drone.fpfis.eu/api/badges/fpfis/httpd-php/status.svg?branch=release/7.2-wt)](https://drone.fpfis.eu/fpfis/httpd-php)
+[![build status](https://drone.fpfis.eu/api/badges/fpfis/httpd-php/status.svg?branch=release/7.2-wt)](https://drone.fpfis.eu/fpfis/httpd-php)</br>
+[![last commit](https://img.shields.io/github/last-commit/fpfis/httpd-php/release/7.2-wt.svg)](https://github.com/fpfis/httpd-php/tree/release/7.2-wt)
 
 ##Description
 * Ubuntu 18.04
@@ -22,7 +23,7 @@
 | Variable           | Description                                                          |  Default
 |--------------------|----------------------------------------------------------------------|---------------------
 |`PHP_VERSION`       |Version to install                                                    |`7.2`
-|`FPM_START_SERVERS  |Number of child processes created on startup                          |`20`
+|`FPM_START_SERVERS` |Number of child processes created on startup                          |`20`
 |`FPM_MIN_CHILDREN`  |Minimum number of idle server processes                               |`10`
 |`FPM_MAX_CHILDREN`  |Maximum number of child processes to be created                       |`30`
 |`FPM_MAX_REQUESTS`  |Number of requests each child process should execute before respawning|`500`
