@@ -27,3 +27,7 @@ pipeline:
     when:
       event: push
       branch: production/*
+
+  update-microbadger-metadatas:
+    image: fpfis/drone-plugin-microbadger
+    secrets: [ plugin_microbadger_webhook ]
