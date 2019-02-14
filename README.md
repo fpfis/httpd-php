@@ -3,7 +3,7 @@
 
 ## Description
 * Ubuntu 18.04
-* Apache + PHP 7.2 + Composer
+* Apache 2.4 + PHP 7.2 + Composer
 * Supervisord
 
 ## Variables
