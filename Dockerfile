@@ -18,7 +18,7 @@ ADD conf/php/ /etc/php/$PHP_VERSION/fpm/conf.d/
 ADD conf/apache2/ /etc/apache2/
 
 ### Cleanup php/apache configuration
-RUN a2enmod proxy_fcgi rewrite headers; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default
+RUN a2enmod proxy_fcgi rewrite headers; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default; echo -n "<?php\n  opcache_reset();\n?>" > ${DOCUMENT_ROOT}/flush_opcache.php
 
 ### Adding supervisor configuration
 COPY conf/supervisor/ /etc/supervisor/
