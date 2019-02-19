@@ -8,7 +8,7 @@ ENV SUPERVISOR_LOG_PATH="/var/log/" SUPERVISOR_CONF_DIR="/etc/supervisor/" DAEMO
 RUN apt-get update && apt-get install unzip cronolog tzdata ssmtp git curl supervisor -y && sed -ri 's@^mailhub=mail$@mailhub=127.0.0.1@' /etc/ssmtp/ssmtp.conf && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata && apt-cache madison php | grep -q "1:${PHP_VERSION}+" && apt-get install apache2 php${PHP_VERSION} -y && apt-get install `for PHP_DEPENDENCY in ${PHP_DEPENDENCIES}; do echo -n "php${PHP_VERSION}-${PHP_DEPENDENCY} "; done` -y; phpdismod exif readline shmop sysvmsg sysvsem sysvshm wddx; apt-get clean all; rm -rf /var/lib/apt/lists/*
 
 ### Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer; composer config -g cache-dir /cache/composer
 
 ### Configure php/php-fpm
 ADD conf/php-fpm/ /etc/php/$PHP_VERSION/fpm/
