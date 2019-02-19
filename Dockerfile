@@ -59,6 +59,7 @@ ARG drush_version="8.1.17"
 ARG dev_packages="gnupg wget curl nano unzip patch git rsync make php${php_version}-xdebug"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_CACHE_DIR=/cache/composer
 ENV PHP_MEMORY_LIMIT=2G
 RUN /scripts/install-dev.sh && \
     phpdismod 95-prod && \
