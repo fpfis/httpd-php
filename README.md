@@ -27,6 +27,7 @@
 |`FPM_MIN_CHILDREN`  |Minimum number of idle server processes                               |`10`
 |`FPM_MAX_CHILDREN`  |Maximum number of idle server processes                               |`30`
 |`FPM_MAX_REQUESTS`  |Number of requests each child process should execute before respawning|`500`
+|`PHP_SESSION_PATH`  |Session path                                                          |`/tmp`
 |`PHP_ERROR_LOG`     |Error log path                                                        |`/var/log/php.err`
 |`PHP_DISPLAY_ERRORS`|display_errors                                                        |`Off`
 |`PHP_DEPENDENCIES`  |Modules to install                                                    |`Available on bottom`
