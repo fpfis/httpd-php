@@ -54,7 +54,7 @@ RUN /scripts/install-full.sh
 
 ## Based on the full image ( adds developement tools )
 FROM httpd-php-full as httpd-php-dev
-ARG composer_version="1.7.2"
+ARG composer_version="1.8.4"
 ARG drush_version="8.1.18"
 ARG dev_packages="gnupg wget curl nano unzip patch git rsync make php${php_version}-xdebug"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
