@@ -27,7 +27,7 @@
 |`FPM_MIN_CHILDREN`       |Minimum number of idle server processes                                        |`10`
 |`FPM_MAX_CHILDREN`       |Maximum number of idle server processes                                        |`30`
 |`FPM_MAX_REQUESTS`       |Number of requests each child process should execute before respawning         |`500`
-|`PHP_UPLOAD_MAX_FILESIZE |The maximum size of an uploaded file                                           |`200M`
+|`PHP_UPLOAD_MAX_FILESIZE`|The maximum size of an uploaded file                                           |`200M`
 |`PHP_POST_MAX_SIZE`      |Max size of post data allowed (need to be bigger that PHP_UPLOAD_MAX_FILESIZE  |`220M`
 |`PHP_SESSION_PATH`       |Session path                                                                   |`/tmp`
 |`PHP_ERROR_LOG`          |Error log path                                                                 |`/var/log/php.err`
