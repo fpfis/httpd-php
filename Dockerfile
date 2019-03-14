@@ -72,7 +72,7 @@ RUN /scripts/install-dev.sh && \
     a2enconf dev
 
 #OCI Dev image
-FROM httpd-php-full as httpd-php-oci
+FROM httpd-php-full as httpd-php-oci-dev
 ARG oci8_version="2.0.12"
 ENV oci8_version=${oci8_version}
 ADD scripts/install-oci.sh /scripts/
