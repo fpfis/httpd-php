@@ -8,10 +8,10 @@ matrix:
       TARGET: httpd-php-full
     - PHP_VERSION: 7.3
       TARGET: httpd-php-oci
-      OCI8_VERSION: 2.1.8
+      OCI8_VERSION: 2.2.0
     - PHP_VERSION: 7.3
       TARGET: httpd-php-oci-dev
-      OCI8_VERSION: 2.1.8
+      OCI8_VERSION: 2.2.0
     - PHP_VERSION: 7.2
       TARGET: httpd-php
     - PHP_VERSION: 7.2
