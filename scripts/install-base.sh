@@ -3,8 +3,8 @@ set -e
 set -x
 
 # Fix www-data uid/gid :
-usermod -u ${USER_ID} www-data
-groupmod -g ${GROUP_ID} www-data
+#usermod -u ${USER_ID} www-data
+#groupmod -g ${GROUP_ID} www-data
 
 # Force usage of local repos
 sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/mirror:\/\/mirrors/' -e 's/\/ubuntu\//\/mirrors.txt/' /etc/apt/sources.list

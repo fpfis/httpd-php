@@ -30,7 +30,7 @@ ENV php_version=${php_version} \
     APACHE_EXTRA_CONF_DIR=""
 
 # Add our setup scripts and run the base one
-ADD scripts /scripts
+ADD scripts/run.sh scripts/install-base.sh /scripts/
 RUN /scripts/install-base.sh
 
 # Add our specific configuration
@@ -46,16 +46,20 @@ RUN phpenmod 90-common 95-prod && \
     a2enconf php${php_version}-fpm prod
 ENTRYPOINT ["/scripts/run.sh"]
 
-## Full PHP images ( adds Java, OCI, and other heavy runtime libs )
+## Full PHP images
 FROM httpd-php as httpd-php-full
+ADD scripts/install-full.sh /scripts/
+RUN /scripts/install-full.sh
+
+## OCI run image
+FROM httpd-php-full as httpd-php-oci
 ARG oci8_version="2.0.12"
 ENV oci8_version=${oci8_version}
-RUN /scripts/install-full.sh
+ADD scripts/install-oci.sh /scripts/
+RUN /scripts/install-oci.sh
 
 ## Based on the full image ( adds developement tools )
 FROM httpd-php-full as httpd-php-dev
-ARG composer_version="1.8.4"
-ARG drush_version="8.1.18"
 ARG dev_packages="gnupg wget curl nano unzip patch git rsync make php${php_version}-xdebug"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -66,3 +70,11 @@ RUN /scripts/install-dev.sh && \
     phpenmod 95-dev && \
     a2disconf prod && \
     a2enconf dev
+
+#OCI Dev image
+FROM httpd-php-full as httpd-php-oci
+ARG oci8_version="2.0.12"
+ENV oci8_version=${oci8_version}
+ADD scripts/install-oci.sh /scripts/
+RUN /scripts/install-oci.sh
+
