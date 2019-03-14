@@ -65,6 +65,7 @@ ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_CACHE_DIR=/cache/composer
 ENV PHP_MEMORY_LIMIT=2G
+ADD scripts/install-dev.sh /scripts/
 RUN /scripts/install-dev.sh && \
     phpdismod 95-prod && \
     phpenmod 95-dev && \
@@ -72,7 +73,7 @@ RUN /scripts/install-dev.sh && \
     a2enconf dev
 
 #OCI Dev image
-FROM httpd-php-full as httpd-php-oci-dev
+FROM httpd-php-dev as httpd-php-oci-dev
 ARG oci8_version="2.0.12"
 ENV oci8_version=${oci8_version}
 ADD scripts/install-oci.sh /scripts/
