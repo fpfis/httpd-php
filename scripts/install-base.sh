@@ -14,13 +14,12 @@ apt-get dist-upgrade -y
 apt-get install -y software-properties-common
 add-apt-repository -y ppa:ondrej/php
 
-for module in ${php_modules}; do
-  if [ "${php_version}" -gt "7.1" ] && [ "${module}" == "mcrypt" ]; then
-    echo "WARNING: ${module} not supported on 7.2"
-    continue
-  fi
-  modules="php${php_version}-${module} ${modules}"
-done
+if [ "${php_version}" == "7.2" ] || [ "${php_version}" -gt "7.3" ]
+then
+	php_modules=$(echo ${php_modules} | sed 's/mcrypt//')
+fi
+
+modules=$(printf "php${php_version}-%s " ${php_modules})
 
 apt-get install -y supervisor apache2 php${php_version}-fpm ${modules} msmtp
 
