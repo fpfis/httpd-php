@@ -51,13 +51,6 @@ FROM httpd-php as httpd-php-full
 ADD scripts/install-full.sh /scripts/
 RUN /scripts/install-full.sh
 
-## OCI run image
-FROM httpd-php-full as httpd-php-oci
-ARG oci8_version="2.0.12"
-ENV oci8_version=${oci8_version}
-ADD scripts/install-oci.sh /scripts/
-RUN /scripts/install-oci.sh
-
 ## Based on the full image ( adds developement tools )
 FROM httpd-php-full as httpd-php-dev
 ARG dev_packages="gnupg wget curl nano unzip patch git rsync make php${php_version}-xdebug"
@@ -71,6 +64,13 @@ RUN /scripts/install-dev.sh && \
     phpenmod 95-dev && \
     a2disconf prod && \
     a2enconf dev
+
+## OCI run image
+FROM httpd-php-full as httpd-php-oci
+ARG oci8_version="2.0.12"
+ENV oci8_version=${oci8_version}
+ADD scripts/install-oci.sh /scripts/
+RUN /scripts/install-oci.sh
 
 #OCI Dev image
 FROM httpd-php-dev as httpd-php-oci-dev
