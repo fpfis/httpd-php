@@ -2,7 +2,7 @@
 set -e
 set -x
 apt-get update
-apt-get install -y wget unzip mysql-client
+apt-get install -y wget unzip mysql-client git patch
 
 # Install composer
 wget https://getcomposer.org/installer -O /tmp/composer-install
