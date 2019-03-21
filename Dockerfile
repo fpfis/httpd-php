@@ -59,6 +59,7 @@ ARG dev_packages="gnupg wget curl nano unzip rsync make php${php_version}-xdebug
 ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV PHP_MEMORY_LIMIT=2G
 ADD scripts/install-dev.sh /scripts/
+ADD scripts/mail-wrapper.sh /scripts/
 RUN /scripts/install-dev.sh && \
     phpdismod 95-prod && \
     phpenmod 95-dev && \
