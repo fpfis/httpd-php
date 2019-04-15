@@ -58,7 +58,7 @@ FROM httpd-php-full as httpd-php-ci
 ARG ci_packages="gnupg wget curl nano unzip rsync make"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV PHP_MEMORY_LIMIT=2G
-ADD scripts/install-dev.sh /scripts/
+ADD scripts/install-ci.sh /scripts/
 ADD scripts/mail-wrapper.sh /scripts/
 RUN /scripts/install-dev.sh && \
     /scripts/mail-wrapper.sh && \
