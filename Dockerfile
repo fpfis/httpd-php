@@ -61,7 +61,6 @@ ENV PHP_MEMORY_LIMIT=2G
 ADD scripts/install-ci.sh /scripts/
 ADD scripts/mail-wrapper.sh /scripts/
 RUN /scripts/install-dev.sh && \
-    /scripts/mail-wrapper.sh && \
     a2disconf prod && \
     a2enconf dev
 
