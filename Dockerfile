@@ -53,18 +53,25 @@ ENV COMPOSER_CACHE_DIR=/cache/composer
 ADD scripts/install-full.sh /scripts/
 RUN /scripts/install-full.sh
 
-## Based on the full image ( adds developement tools )
-FROM httpd-php-full as httpd-php-dev
-ARG dev_packages="gnupg wget curl nano unzip rsync make php${php_version}-xdebug"
+## Based on the full image ( adds ci tools )
+FROM httpd-php-full as httpd-php-ci
+ARG ci_packages="gnupg wget curl nano unzip rsync make"
 ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV PHP_MEMORY_LIMIT=2G
 ADD scripts/install-dev.sh /scripts/
 ADD scripts/mail-wrapper.sh /scripts/
 RUN /scripts/install-dev.sh && \
-    phpdismod 95-prod && \
-    phpenmod 95-dev && \
+    /scripts/mail-wrapper.sh && \
     a2disconf prod && \
     a2enconf dev
+
+## Based on the ci image ( adds developement tools )
+FROM httpd-php-ci as httpd-php-dev
+ARG dev_packages="php${php_version}-xdebug"
+ADD scripts/install-dev.sh /scripts/
+RUN /scripts/install-dev.sh && \
+    phpdismod 95-prod && \
+    phpenmod 95-dev
 
 ## OCI run image
 FROM httpd-php-full as httpd-php-oci
