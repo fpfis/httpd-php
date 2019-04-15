@@ -3,6 +3,8 @@ matrix:
     - PHP_VERSION: 7.3
       TARGET: httpd-php
     - PHP_VERSION: 7.3
+      TARGET: httpd-php-ci
+    - PHP_VERSION: 7.3
       TARGET: httpd-php-dev
     - PHP_VERSION: 7.3
       TARGET: httpd-php-full
@@ -14,6 +16,8 @@ matrix:
       OCI8_VERSION: 2.2.0
     - PHP_VERSION: 7.2
       TARGET: httpd-php
+    - PHP_VERSION: 7.2
+      TARGET: httpd-php-ci
     - PHP_VERSION: 7.2
       TARGET: httpd-php-dev
     - PHP_VERSION: 7.2
@@ -26,6 +30,8 @@ matrix:
       OCI8_VERSION: 2.1.8
     - PHP_VERSION: 7.1
       TARGET: httpd-php
+    - PHP_VERSION: 7.1
+      TARGET: httpd-php-ci
     - PHP_VERSION: 7.1
       TARGET: httpd-php-dev
     - PHP_VERSION: 7.1
@@ -38,6 +44,8 @@ matrix:
       OCI8_VERSION: 2.1.8
     - PHP_VERSION: 5.6
       TARGET: httpd-php
+    - PHP_VERSION: 5.6
+      TARGET: httpd-php-ci
     - PHP_VERSION: 5.6
       TARGET: httpd-php-dev
     - PHP_VERSION: 5.6
