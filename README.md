@@ -13,7 +13,6 @@
 |`TIMEOUT`              |Timeout (seconds)                                            |`120`
 |`DOCUMENT_ROOT`        |Document Root                                                |`/var/www/html`
 |`PORT`                 |Listen Port                                                  |`8080`
-|`APACHE_EXTRA_CONF`    |Extra configuration                                          |empty
 |`APACHE_EXTRA_CONF_DIR`|Extra configuration directory                                |empty
 |`APACHE_ACCESS_LOG`    |Access log path (need to be file output/ piped with cronolog)|`/var/log/access`
 |`APACHE_ERRORS_LOG`    |Error log path                                               |`/var/log/apache.err`
