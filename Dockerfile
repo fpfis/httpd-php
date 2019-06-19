@@ -50,13 +50,13 @@ ENTRYPOINT ["/scripts/run.sh"]
 FROM httpd-php as httpd-php-full
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_CACHE_DIR=/cache/composer
+ENV PATH=${PATH}:/root/.composer/vendor/bin
 ADD scripts/install-full.sh /scripts/
 RUN /scripts/install-full.sh
 
 ## Based on the full image ( adds ci tools )
 FROM httpd-php-full as httpd-php-ci
 ARG ci_packages="gnupg wget curl nano unzip rsync make"
-ENV PATH=${PATH}:/root/.composer/vendor/bin
 ENV PHP_MEMORY_LIMIT=2G
 ADD scripts/install-ci.sh /scripts/
 ADD scripts/mail-wrapper.sh /scripts/
