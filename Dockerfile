@@ -18,7 +18,7 @@ ADD conf/php/ /etc/php/$PHP_VERSION/fpm/conf.d/
 ADD conf/apache2/ /etc/apache2/
 
 ### Cleanup php/apache configuration
-RUN a2enmod proxy_fcgi rewrite headers; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default; echo -n "<?php\n  opcache_reset();\n?>" > ${DOCUMENT_ROOT}/flush_opcache.php; echo -n "<?php\n  echo json_encode(opcache_get_status());\n?>" > ${DOCUMENT_ROOT}/opcache_json.php; curl https://raw.githubusercontent.com/anthosz/opcache-status/master/opcache.php > ${DOCUMENT_ROOT}/opcache_status.php
+RUN a2enmod proxy_fcgi rewrite headers; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default; echo -n "<?php\n  opcache_reset();\n?>" > /var/www/flush_opcache.php; echo -n "<?php\n  echo json_encode(opcache_get_status());\n?>" > /var/www/opcache_json.php; curl https://raw.githubusercontent.com/anthosz/opcache-status/master/opcache.php > /var/www/opcache_status.php
 
 ### Adding supervisor configuration
 COPY conf/supervisor/ /etc/supervisor/
