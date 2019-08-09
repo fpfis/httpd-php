@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-PHP_INI_SCAN_DIR=/etc/php/${PHP_VERSION}/fpm-${ENVIRONMENT}/conf.d 
+# Add ini to use
+export PHP_INI_SCAN_DIR=/etc/php/${PHP_VERSION}/fpm-${ENVIRONMENT}/conf.d
 
 # Get our command to run
 export CMD="${@}"
