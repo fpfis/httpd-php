@@ -10,6 +10,7 @@
 ### Apache
 | Variable              | Description                                                 |  Default
 |-----------------------|-------------------------------------------------------------|---------------------
+|`ENVIRONMENT`          |Environment (prd or dev)                                     |`prd`
 |`TIMEOUT`              |Timeout (seconds)                                            |`120`
 |`DOCUMENT_ROOT`        |Document Root                                                |`/var/www/html`
 |`PORT`                 |Listen Port                                                  |`8080`
@@ -31,6 +32,7 @@
 |`PHP_SESSION_PATH`       |Session path                                                                   |`/tmp`
 |`PHP_ERROR_LOG`          |Error log path                                                                 |`/var/log/php.err`
 |`PHP_DISPLAY_ERRORS`     |display_errors                                                                 |`Off`
+|`PHP_OPCACHE`            |Opcache status                                                                 |`On`
 |`PHP_DEPENDENCIES`       |Modules to install                                                             |`Available on bottom`
 ### Supervisor
 | Variable                  | Description                     |  Default
