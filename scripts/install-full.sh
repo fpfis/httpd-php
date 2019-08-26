@@ -17,6 +17,7 @@ wget https://github.com/drush-ops/drush/releases/download/8.2.3/drush.phar -O /u
 ln -s /usr/bin/composer /usr/local/bin/composer
 ln -s /usr/bin/drush /usr/local/bin/drush
 chmod +x /usr/bin/composer /usr/bin/drush
+drush @none dl registry_rebuild-7.x
 
 apt-get clean
 rm -rf /var/lib/apt/lists/*
