@@ -17,6 +17,7 @@
 |`APACHE_EXTRA_CONF_DIR`|Extra configuration directory                                |empty
 |`APACHE_ACCESS_LOG`    |Access log path (need to be file output/ piped with cronolog)|`/var/log/access`
 |`APACHE_ERRORS_LOG`    |Error log path                                               |`/var/log/apache.err`
+|`ALLOWINDEXES`         |Allow directory index                                        |`-Indexes`
 |`ALLOWOVERRIDE`        |Allow Overide value                                          |`None`
 ### PHP
 | Variable                | Description                                                                   |  Default
