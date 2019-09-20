@@ -9,9 +9,6 @@ RUN apt-get update && apt-get install cronolog tzdata supervisor -y && sed -i 's
 ### Revamp apache configuration
 ADD conf/apache2/ /usr/local/apache2/conf/
 
-### Cleanup php/apache configuration
-RUN a2enmod proxy_fcgi rewrite headers; a2disconf other-vhosts-access-log; 
-
 ### Adding supervisor configuration
 COPY conf/supervisor/ /etc/supervisor/
 ADD run.sh /
