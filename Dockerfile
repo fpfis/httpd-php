@@ -4,7 +4,7 @@ ENV ENVIRONMENT=prd TIMEOUT=120 DOCUMENT_ROOT="/var/www/html" PORT=8080 APACHE_E
 ENV SUPERVISOR_LOG_PATH="/var/log/" SUPERVISOR_CONF_DIR="/etc/supervisor/" DAEMON_USER="www-data" DAEMON_GROUP="www-data" SUPERVISORCTL_LISTEN_PORT="9001" SUPERVISORCTL_USER="admin" SUPERVISORCTL_PASS="password" DEBIAN_FRONTEND="noninteractive"
 
 ### Configure timezone / adding ssmtp / default dep / Install Apache / PHP/FPM (including modules) / cleanup cache
-RUN apt-get update && apt-get install cronolog tzdata supervisor -y && sed -i 's@:www-data:@:EC FPIS DO NOT REPLY:@' /etc/passwd && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata && apt-get clean all; rm -rf /var/lib/apt/lists/* /etc/apache2/mods-enabled/status.conf; > /var/www/html/index.html
+RUN apt-get update && apt-get install cronolog tzdata supervisor -y && sed -i 's@:www-data:@:EC FPIS DO NOT REPLY:@' /etc/passwd && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata && apt-get clean all; rm -rf /var/lib/apt/lists/* /etc/apache2/mods-enabled/status.conf; mkdir -p /var/www/html && > /var/www/html/index.html
 
 ### Revamp apache configuration
 ADD conf/apache2/ /usr/local/apache2/conf/
