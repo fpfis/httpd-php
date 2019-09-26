@@ -19,8 +19,8 @@ ENV php_version=${php_version} \
     HTTP_PORT=8080 \
     APACHE_ERROR_LOG=/proc/self/fd/2 \
     APACHE_ACCESS_LOG=/proc/self/fd/1 \
-    PHP_MAX_EXECUTION_TIME=30 \
-    PHP_MAX_INPUT_TIME=30 \
+    PHP_MAX_EXECUTION_TIME=120 \
+    PHP_MAX_INPUT_TIME=120 \
     PHP_MEMORY_LIMIT=512M \
     SITE_PATH=/ \
     SMTP_PORT=25 \
@@ -34,7 +34,7 @@ ADD scripts/run.sh scripts/install-base.sh /scripts/
 RUN /scripts/install-base.sh
 
 # Add our specific configuration
-ADD supervisor_conf /etc/supervisor/conf.d
+ADD supervisor_conf/httpd.conf supervisor_conf/php.conf /etc/supervisor/conf.d/
 ADD apache2_conf /etc/apache2
 ADD php_conf /etc/php/${php_version}/mods-available
 ADD phpfpm_conf /etc/php/${php_version}/fpm/pool.d
@@ -62,10 +62,13 @@ ADD scripts/install-ci.sh /scripts/
 ADD scripts/mail-wrapper.sh /scripts/
 RUN /scripts/install-ci.sh && \
     a2disconf prod && \
-    a2enconf dev
+    a2enconf dev && \
+    a2enmod proxy_http && \
+    a2enmod proxy_wstunnel
 
 ## Based on the ci image ( adds developement tools )
 FROM httpd-php-ci as httpd-php-dev
+ADD supervisor_conf/shell.conf /etc/supervisor/conf.d
 ARG dev_packages="php${php_version}-xdebug"
 ADD scripts/install-dev.sh /scripts/
 RUN /scripts/install-dev.sh && \

@@ -9,12 +9,13 @@ wget https://getcomposer.org/installer -O /tmp/composer-install
 
 php /tmp/composer-install --install-dir=/usr/bin --filename=composer
 
+# Install drush & security-checker
+## Temporarily pin to version 8.2.3... 
+composer global require drush/drush:8.2.3 sensiolabs/security-checker
 # Touch up
 ln -s /usr/bin/composer /usr/local/bin/composer
 chmod +x /usr/bin/composer
-
-# Install drush & security-checker
-composer global require drush/drush:^8 sensiolabs/security-checker
+drush @none dl registry_rebuild-7.x
 
 apt-get clean
 rm -rf /var/lib/apt/lists/*
