@@ -14,6 +14,7 @@ php /tmp/composer-install --install-dir=/usr/bin --filename=composer
 composer global require drush/drush:8.2.3 sensiolabs/security-checker
 # Touch up
 ln -s /usr/bin/composer /usr/local/bin/composer
+ln -s $(realpath ~/.composer/vendor/bin/drush) /usr/local/bin/drush
 chmod +x /usr/bin/composer
 drush @none dl registry_rebuild-7.x
 
