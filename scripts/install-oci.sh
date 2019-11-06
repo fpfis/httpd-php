@@ -21,7 +21,7 @@ pecl download oci8-${oci8_version}
 tar -xzvf oci8-${oci8_version}.tgz
 pushd oci8-${oci8_version}
 phpize
-./configure --with-oci8=instantclient,/usr/local/instantclient_12_2
+./configure --with-oci8=instantclient,/usr/local/instantclient_19_3
 make -j$(nproc)
 make install
 popd
