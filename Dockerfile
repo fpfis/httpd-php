@@ -32,6 +32,7 @@ ENV php_version=${php_version} \
 # Add our setup scripts and run the base one
 ADD scripts/run.sh scripts/install-base.sh /scripts/
 RUN /scripts/install-base.sh
+ADD scripts/mail-wrapper.sh /scripts/
 
 # Add our specific configuration
 ADD supervisor_conf/httpd.conf supervisor_conf/php.conf /etc/supervisor/conf.d/
@@ -59,7 +60,6 @@ FROM httpd-php-full as httpd-php-ci
 ARG ci_packages="gnupg wget curl nano unzip rsync make"
 ENV PHP_MEMORY_LIMIT=2G
 ADD scripts/install-ci.sh /scripts/
-ADD scripts/mail-wrapper.sh /scripts/
 RUN /scripts/install-ci.sh && \
     a2disconf prod && \
     a2enconf dev && \
