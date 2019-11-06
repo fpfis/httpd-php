@@ -12,7 +12,7 @@ curl -L https://download.oracle.com/otn_software/linux/instantclient/193000/inst
 unzip /tmp/instantclient-basic-linux.zip -d /usr/local/ 
 curl -L https://download.oracle.com/otn_software/linux/instantclient/193000/instantclient-sdk-linux.x64-19.3.0.0.0dbru.zip > /tmp/instantclient-sdk-linux.zip 
 unzip /tmp/instantclient-sdk-linux.zip -d /usr/local/
-ln -s /usr/local/instantclient_19_3/libclntsh.so.12.1 /usr/local/instantclient_19_3/libclntsh.so
+#ln -s /usr/local/instantclient_19_3/libclntsh.so.12.1 /usr/local/instantclient_19_3/libclntsh.so
 echo /usr/local/instantclient_19_3 > /etc/ld.so.conf.d/oracle-instantclient.conf && ldconfig
 
 # OCI8 build :
