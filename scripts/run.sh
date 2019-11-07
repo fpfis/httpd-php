@@ -18,7 +18,7 @@ export CMD=$@
 [ ! -d /var/log/apache2 ] && mkdir /var/log/apache2
 [ ! -d /var/log/supervisor ] && mkdir /var/log/supervisor
 
-rm -f /var/run/apache2/apache2.pid
+[ -f /run/apache2.pid ] && rm -f /run/apache2.pid
 
 if [ -z "${CMD}" ]; then
   # As root, let daemon handle the rest
