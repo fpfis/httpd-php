@@ -11,4 +11,4 @@ ARGS="--host=${SMTP_SERVER}"
 [ ! -z "${SMTP_USERNAME}" ] && ARGS="${ARGS} --username=${SMTP_USERNAME}"
 [ ! -z "${SMTP_PASSWORD}" ] && ARGS="${ARGS} --passwordeval='echo ${SMTP_PASSWORD}'"
 
-msmtp ${ARGS} $@
+msmtp ${ARGS} -t 
