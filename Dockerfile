@@ -57,7 +57,7 @@ RUN /scripts/install-full.sh
 
 ## Based on the full image ( adds ci tools )
 FROM httpd-php-full as httpd-php-ci
-ARG ci_packages="gnupg wget curl nano unzip rsync make"
+ARG ci_packages="gnupg wget curl nano unzip rsync make git patch"
 ENV PHP_MEMORY_LIMIT=2G
 ADD scripts/install-ci.sh /scripts/
 RUN /scripts/install-ci.sh && \
