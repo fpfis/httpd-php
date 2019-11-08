@@ -25,8 +25,8 @@
 |`PHP_VERSION`            |Version to install                                                             |`7.2`
 |`FPM_MAX_CHILDREN`       |Maximum number of child processes to be created                                |`100`
 |`FPM_START_SERVERS`      |Number of child processes created on startup                                   |`20`
-|`FPM_MIN_SPARE_SERVER`       |Minimum number of idle server processes                                        |`10`
-|`FPM_MAX_SPARE_SERVER`       |Maximum number of idle server processes                                        |`30`
+|`FPM_MIN_SPARE_SERVER`   |Minimum number of idle server processes                                        |`10`
+|`FPM_MAX_SPARE_SERVER`   |Maximum number of idle server processes                                        |`30`
 |`FPM_MAX_REQUESTS`       |Number of requests each child process should execute before respawning         |`500`
 |`PHP_UPLOAD_MAX_FILESIZE`|The maximum size of an uploaded file                                           |`200M`
 |`PHP_POST_MAX_SIZE`      |Max size of post data allowed (need to be bigger that PHP_UPLOAD_MAX_FILESIZE  |`220M`
@@ -34,6 +34,7 @@
 |`PHP_ERROR_LOG`          |Error log path                                                                 |`/var/log/php.err`
 |`PHP_DISPLAY_ERRORS`     |display_errors                                                                 |`Off`
 |`PHP_OPCACHE`            |Opcache status                                                                 |`On`
+|`PHP_XDEBUG_REMOTE_HOST` |Xdebug remote host                                                             |`172.17.0.1`
 |`PHP_DEPENDENCIES`       |Modules to install                                                             |`Available on bottom`
 ### Supervisor
 | Variable                  | Description                     |  Default
