@@ -18,6 +18,8 @@ export CMD=$@
 [ ! -d /var/log/apache2 ] && mkdir /var/log/apache2
 [ ! -d /var/log/supervisor ] && mkdir /var/log/supervisor
 
+[ -f /run/apache2.pid ] && if ! ps -p $(cat /run/apache2.pid) | grep 'apache2' > /dev/null; then rm -f /run/apache2.pid; fi
+
 if [ -z "${CMD}" ]; then
   # As root, let daemon handle the rest
   supervisord -nc /etc/supervisor/supervisord.conf
