@@ -1,5 +1,10 @@
-## Base PHP image :
+## go version of supervisord. Less dependencies and faster
 
+FROM golang as supervisord
+
+RUN go get -v github.com/ochinchina/supervisord
+
+## Base PHP image :
 FROM ubuntu as httpd-php
 
 # Build arguments
@@ -39,6 +44,8 @@ ADD supervisor_conf/httpd.conf supervisor_conf/php.conf /etc/supervisor/conf.d/
 ADD apache2_conf /etc/apache2
 ADD php_conf /etc/php/${php_version}/mods-available
 ADD phpfpm_conf /etc/php/${php_version}/fpm/pool.d
+ADD supervisor_conf/supervisord.conf /etc/supervisor/
+COPY --from=supervisord /go/bin/supervisord /usr/bin/
 
 # Enable our specific configuration
 RUN phpenmod 90-common 95-prod && \

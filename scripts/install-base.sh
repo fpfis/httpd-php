@@ -21,10 +21,12 @@ fi
 
 modules=$(printf "php${php_version}-%s " ${php_modules})
 
-apt-get install -y supervisor apache2 php${php_version}-fpm ${modules} msmtp
+apt-get install -y apache2 php${php_version}-fpm ${modules} msmtp
 
 apt-get autoremove software-properties-common -y --purge
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 
 ln -s /bin/true /usr/sbin/sendmail
+
+mkdir /etc/supervisor/
