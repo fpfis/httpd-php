@@ -12,18 +12,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG php_version="5.6"
 ARG php_modules="sqlite curl soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached tidy"
 ARG apache2_modules="proxy_fcgi setenvif rewrite"
-ARG USER_ID=1000
-ARG GROUP_ID=1000
 
 # Default configuration and environment
 ENV php_version=${php_version} \
     FPM_MAX_CHILDREN=5 \
-    FPM_MIN_CHILDREN=2 \
+    FPM_MIN_CHILDREN=1 \
     DAEMON_USER=www-data \
     DAEMON_GROUP=www-data \
     HTTP_PORT=8080 \
-    APACHE_ERROR_LOG=/proc/self/fd/2 \
-    APACHE_ACCESS_LOG=/proc/self/fd/1 \
     PHP_MAX_EXECUTION_TIME=120 \
     PHP_MAX_INPUT_TIME=120 \
     PHP_MEMORY_LIMIT=512M \
