@@ -17,6 +17,7 @@ export CMD=$@
 
 [ ! -d /var/log/apache2 ] && mkdir /var/log/apache2
 [ ! -d /var/log/supervisor ] && mkdir /var/log/supervisor
+[ ! -d /var/log/php ] && mkdir /var/log/php
 
 [ -f /run/apache2.pid ] && if ! ps -p $(cat /run/apache2.pid) | grep 'apache2' > /dev/null; then rm -f /run/apache2.pid; fi
 
