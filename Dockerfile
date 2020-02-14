@@ -12,6 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG php_version="5.6"
 ARG php_modules="sqlite curl soap bz2 calendar exif mysql opcache zip xsl intl mcrypt yaml mbstring ldap sockets iconv gd redis memcached tidy"
 ARG apache2_modules="proxy_fcgi setenvif rewrite"
+ARG composer_version="1.9.3"
 
 # Default configuration and environment
 ENV php_version=${php_version} \
@@ -52,6 +53,7 @@ ENTRYPOINT ["/scripts/run.sh"]
 
 ## Full PHP images
 FROM httpd-php as httpd-php-full
+ENV composer_version=${composer_version}
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_CACHE_DIR=/cache/composer
 ENV PATH=${PATH}:/root/.composer/vendor/bin
