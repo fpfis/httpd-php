@@ -66,8 +66,8 @@ The [Dockerfile](Dockerfile) is a multistage file containing multiple targets to
 |`oci8_version`    | Version of oci8 library to install (full)      | `2.0.12`
 |`apache2_modules` | List of Apache modules to enable after install | `proxy_fcgi setenvif rewrite`
 |`dev_packages`    | Additional packages to install the dev image   | `gnupg wget curl nano unzip patch git rsync make php${php_version}-xdebug`
-|`composer_version`| Version of Composer to install the dev image   | `1.8.4`
-|`drush_version`   | Version of Drush to install the dev image      | `8.1.18`
+|`composer_version`| Version of Composer to install the dev image   | `1.9.3`
+|`drush_version`   | Version of Drush to install the dev image      | `8.2.3`
 |`USER_ID`         | User ID to use for Apache and PHP              | `1000`
 |`GROUP_ID`        | Group ID to use for Apache and PHP             | `1000`
 

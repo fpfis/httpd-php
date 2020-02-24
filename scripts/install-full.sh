@@ -7,7 +7,7 @@ apt-get install -y wget unzip mysql-client
 # Install composer
 wget https://getcomposer.org/installer -O /tmp/composer-install
 
-php /tmp/composer-install --install-dir=/usr/bin --filename=composer
+php /tmp/composer-install --install-dir=/usr/bin --filename=composer --version=${composer_version}
 
 # Install drush & security-checker
 ## Temporarily pin to version 8.2.3... 
