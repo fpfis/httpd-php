@@ -1,5 +1,16 @@
 matrix:
   include:
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php-ci
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php-dev
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php-full
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php-oci
+      OCI8_VERSION: 2.2.0
     - PHP_VERSION: 7.3
       TARGET: httpd-php
     - PHP_VERSION: 7.3
