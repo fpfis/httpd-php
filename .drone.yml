@@ -1,5 +1,16 @@
 matrix:
   include:
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php-ci
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php-dev
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php-full
+    - PHP_VERSION: 7.4
+      TARGET: httpd-php-oci
+      OCI8_VERSION: 2.2.0
     - PHP_VERSION: 7.3
       TARGET: httpd-php
     - PHP_VERSION: 7.3
@@ -59,6 +70,21 @@ matrix:
 
 
 pipeline:
+  # Build for test (dry-run)
+  build-for-test-branch:
+    image: plugins/docker
+    repo: fpfis/${TARGET}
+    tags: ${PHP_VERSION}
+    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
+    target: ${TARGET}
+    dry_run: true
+    build_args:
+      - php_version=${PHP_VERSION}
+      - oci8_version=${OCI8_VERSION}
+    when:
+      event: pull_request
+      branch: develop
+
   # Build and push release
   build-and-push-branch:
     image: plugins/docker
