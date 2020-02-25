@@ -70,8 +70,8 @@ matrix:
 
 
 pipeline:
-  # Build and push release
-  build-and-push-branch:
+  # Build for test (dry-run)
+  build-for-test-branch:
     image: plugins/docker
     repo: fpfis/${TARGET}
     tags: ${PHP_VERSION}
