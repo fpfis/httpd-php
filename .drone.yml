@@ -77,6 +77,21 @@ pipeline:
     tags: ${PHP_VERSION}
     secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
     target: ${TARGET}
+    dry_run: true
+    build_args:
+      - php_version=${PHP_VERSION}
+      - oci8_version=${OCI8_VERSION}
+    when:
+      event: pull_request
+      branch: develop
+
+  # Build and push release
+  build-and-push-branch:
+    image: plugins/docker
+    repo: fpfis/${TARGET}
+    tags: ${PHP_VERSION}
+    secrets: [ DOCKER_USERNAME, DOCKER_PASSWORD ]
+    target: ${TARGET}
     build_args:
       - php_version=${PHP_VERSION}
       - oci8_version=${OCI8_VERSION}
