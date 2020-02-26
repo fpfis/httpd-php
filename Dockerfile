@@ -30,6 +30,7 @@ ENV php_version=${php_version} \
     DOCUMENT_ROOT=/var/www/html \
     APACHE_EXTRA_CONF="" \
     APACHE_EXTRA_CONF_DIR=""
+    composer_version=${composer_version}
 
 # Add our setup scripts and run the base one
 ADD scripts/run.sh scripts/install-base.sh /scripts/
@@ -53,7 +54,6 @@ ENTRYPOINT ["/scripts/run.sh"]
 
 ## Full PHP images
 FROM httpd-php as httpd-php-full
-ENV composer_version=${composer_version}
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_CACHE_DIR=/cache/composer
 ENV PATH=${PATH}:/root/.composer/vendor/bin
