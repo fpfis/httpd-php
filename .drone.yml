@@ -2,84 +2,60 @@ matrix:
   include:
     - PHP_VERSION: 7.3
       TARGET: httpd-php
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.3
       TARGET: httpd-php-ci
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.3
       TARGET: httpd-php-dev
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.3
       TARGET: httpd-php-full
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.3
       TARGET: httpd-php-oci
       OCI8_VERSION: 2.2.0
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.3
       TARGET: httpd-php-oci-dev
       OCI8_VERSION: 2.2.0
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.2
       TARGET: httpd-php
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.2
       TARGET: httpd-php-ci
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.2
       TARGET: httpd-php-dev
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.2
       TARGET: httpd-php-full
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.2
       TARGET: httpd-php-oci
       OCI8_VERSION: 2.1.8
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.2
       TARGET: httpd-php-oci-dev
       OCI8_VERSION: 2.1.8
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.1
       TARGET: httpd-php
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.1
       TARGET: httpd-php-ci
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.1
       TARGET: httpd-php-dev
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.1
       TARGET: httpd-php-full
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.1
       TARGET: httpd-php-oci
       OCI8_VERSION: 2.1.8
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 7.1
       TARGET: httpd-php-oci-dev
       OCI8_VERSION: 2.1.8
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 5.6
       TARGET: httpd-php
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 5.6
       TARGET: httpd-php-ci
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 5.6
       TARGET: httpd-php-dev
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 5.6
       TARGET: httpd-php-full
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 5.6
       TARGET: httpd-php-oci
       OCI8_VERSION: 2.0.12
-      COMPOSER_VERSION: 1.9.3
     - PHP_VERSION: 5.6
       TARGET: httpd-php-oci-dev
       OCI8_VERSION: 2.0.12
-      COMPOSER_VERSION: 1.9.3
 
 
 pipeline:
@@ -108,7 +84,6 @@ pipeline:
     build_args:
       - php_version=${PHP_VERSION}
       - oci8_version=${OCI8_VERSION}
-      - composer_version=${COMPOSER_VERSION}
     when:
       event: push
       branch: develop
@@ -123,7 +98,6 @@ pipeline:
     build_args:
       - php_version=${PHP_VERSION}
       - oci8_version=${OCI8_VERSION}
-      - composer_version=${COMPOSER_VERSION}
     when:
       event: push
       branch: master
@@ -141,7 +115,6 @@ pipeline:
     build_args:
     - php_version=${PHP_VERSION}
     - oci8_version=${OCI8_VERSION}
-    - composer_version=${COMPOSER_VERSION}
     when:
       event: tag
       matrix:
