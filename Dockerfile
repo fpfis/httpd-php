@@ -29,7 +29,7 @@ ENV php_version=${php_version} \
     SMTP_FROM=www-data@localhost \
     DOCUMENT_ROOT=/var/www/html \
     APACHE_EXTRA_CONF="" \
-    APACHE_EXTRA_CONF_DIR=""
+    APACHE_EXTRA_CONF_DIR="" \
     composer_version=${composer_version}
 
 # Add our setup scripts and run the base one
