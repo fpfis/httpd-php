@@ -26,5 +26,5 @@ if [ -z "${CMD}" ]; then
   exec supervisord -c /etc/supervisor/supervisord.conf
 else
   # TODO : us ref_dir's permissions to use it's UID
-  exec ${CMD}
+  eval ${CMD}
 fi
