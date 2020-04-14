@@ -30,6 +30,8 @@ ENV php_version=${php_version} \
     DOCUMENT_ROOT=/var/www/html \
     APACHE_EXTRA_CONF="" \
     APACHE_EXTRA_CONF_DIR="" \
+    SYSLOG_SERVER_IP=localhost \
+    SYSLOG_SERVER_PORT=514 \
     composer_version=${composer_version}
 
 # Add our setup scripts and run the base one
@@ -43,6 +45,8 @@ ADD apache2_conf /etc/apache2
 ADD php_conf /etc/php/${php_version}/mods-available
 ADD phpfpm_conf /etc/php/${php_version}/fpm/pool.d
 ADD supervisor_conf/supervisord.conf /etc/supervisor/
+ADD supervisor_conf/syslog.conf /etc/supervisor/conf.d/
+ADD rsyslog_conf/rsyslog.conf /etc/rsyslog.conf
 COPY --from=supervisord /go/bin/supervisord /usr/bin/
 
 # Enable our specific configuration

@@ -9,6 +9,8 @@ services:
     environment:
       - SMTP_SERVER=mailhog
       - SMTP_PORT=1025
+      - SYSLOG_SERVER_IP=web
+      - SYSLOG_SERVER_PORT=514
     ports:
       - 8080:8080
     volumes:
