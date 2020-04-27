@@ -1,7 +1,7 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV ENVIRONMENT=prd TIMEOUT=120 DOCUMENT_ROOT="/var/www/html" PORT=8080 APACHE_EXTRA_CONF_DIR="" APACHE_ERROR_LOG="/var/log/apache.err" APACHE_ACCESS_LOG="/var/log/access" ALLOWINDEXES="+Indexes" ALLOWOVERRIDE="none"
-ENV PHP_VERSION="7.2" FPM_MAX_CHILDREN=100 FPM_START_SERVERS=20 FPM_MIN_SPARE_SERVER=10 FPM_MAX_SPARE_SERVER=30 FPM_MAX_REQUESTS=500 PHP_UPLOAD_MAX_FILESIZE="200M" PHP_POST_MAX_SIZE="220M" PHP_SESSION_PATH="/tmp" PHP_ERROR_LOG="/var/log/php.err" PHP_DISPLAY_ERRORS="Off" PHP_OPCACHE="On" PHP_XDEBUG_REMOTE_HOST="172.17.0.1" PHP_DEPENDENCIES="common cli fpm soap bz2 opcache zip xsl intl imap mbstring ldap mysql gd memcached redis curl sqlite bcmath xdebug"
+ENV PHP_VERSION="7.4" FPM_MAX_CHILDREN=100 FPM_START_SERVERS=20 FPM_MIN_SPARE_SERVER=10 FPM_MAX_SPARE_SERVER=30 FPM_MAX_REQUESTS=500 PHP_UPLOAD_MAX_FILESIZE="200M" PHP_POST_MAX_SIZE="220M" PHP_SESSION_PATH="/tmp" PHP_ERROR_LOG="/var/log/php.err" PHP_DISPLAY_ERRORS="Off" PHP_OPCACHE="On" PHP_XDEBUG_REMOTE_HOST="172.17.0.1" PHP_DEPENDENCIES="common cli fpm soap bz2 opcache zip xsl intl imap mbstring ldap mysql gd memcached redis curl sqlite bcmath xdebug"
 ENV SUPERVISOR_LOG_PATH="/var/log/" SUPERVISOR_CONF_DIR="/etc/supervisor/" DAEMON_USER="www-data" DAEMON_GROUP="www-data" SUPERVISORCTL_LISTEN_PORT="9001" SUPERVISORCTL_USER="admin" SUPERVISORCTL_PASS="password" DEBIAN_FRONTEND="noninteractive"
 
 ### Configure timezone / adding ssmtp / default dep / Install Apache / PHP/FPM (including modules) / cleanup cache
@@ -19,7 +19,7 @@ ADD conf/php/ /etc/php/$PHP_VERSION/fpm/conf.d/
 ADD conf/apache2/ /etc/apache2/
 
 ### Cleanup php/apache configuration
-RUN a2enmod proxy_fcgi rewrite headers proxy_http; a2disconf php7.2-fpm other-vhosts-access-log; a2dissite 000-default; echo -n "<?php\n  opcache_reset();\n?>" > /var/www/flush_opcache.php; echo -n "<?php\n  echo json_encode(opcache_get_status());\n?>" > /var/www/opcache_json.php; curl https://raw.githubusercontent.com/anthosz/opcache-status/master/opcache.php > /var/www/opcache_status.php
+RUN a2enmod proxy_fcgi rewrite headers proxy_http; a2disconf php7.4-fpm other-vhosts-access-log; a2dissite 000-default; echo -n "<?php\n  opcache_reset();\n?>" > /var/www/flush_opcache.php; echo -n "<?php\n  echo json_encode(opcache_get_status());\n?>" > /var/www/opcache_json.php; curl https://raw.githubusercontent.com/anthosz/opcache-status/master/opcache.php > /var/www/opcache_status.php
 
 ### Adding supervisor configuration
 COPY conf/supervisor/ /etc/supervisor/

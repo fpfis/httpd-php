@@ -1,9 +1,9 @@
-# httpd-php/72-wt
-[![build status](https://drone.fpfis.eu/api/badges/fpfis/httpd-php/status.svg?branch=release/72-wt)](https://drone.fpfis.eu/fpfis/httpd-php) [![last commit](https://img.shields.io/github/last-commit/fpfis/httpd-php/release/72-wt.svg)](https://github.com/fpfis/httpd-php/tree/release/72-wt) [![image size](https://img.shields.io/microbadger/image-size/fpfis/httpd-php/72-wt.svg)](https://cloud.docker.com/u/fpfis/repository/docker/fpfis/httpd-php/tags) [![layer](https://img.shields.io/microbadger/layers/fpfis/httpd-php/72-wt.svg)](https://cloud.docker.com/u/fpfis/repository/docker/fpfis/httpd-php/tags)
+# httpd-php/74-wt
+[![build status](https://drone.fpfis.eu/api/badges/fpfis/httpd-php/status.svg?branch=release/74-wt)](https://drone.fpfis.eu/fpfis/httpd-php) [![last commit](https://img.shields.io/github/last-commit/fpfis/httpd-php/release/74-wt.svg)](https://github.com/fpfis/httpd-php/tree/release/74-wt) [![image size](https://img.shields.io/microbadger/image-size/fpfis/httpd-php/74-wt.svg)](https://cloud.docker.com/u/fpfis/repository/docker/fpfis/httpd-php/tags) [![layer](https://img.shields.io/microbadger/layers/fpfis/httpd-php/74-wt.svg)](https://cloud.docker.com/u/fpfis/repository/docker/fpfis/httpd-php/tags)
 
 ## Description
-* Ubuntu 18.04
-* Apache 2.4 + PHP 7.2 + Composer
+* Ubuntu 20.04
+* Apache 2.4 + PHP 7.4 + Composer
 * Supervisord
 
 ## Variables
@@ -22,7 +22,7 @@
 ### PHP
 | Variable                | Description                                                                   |  Default
 |-------------------------|-------------------------------------------------------------------------------|---------------------
-|`PHP_VERSION`            |Version to install                                                             |`7.2`
+|`PHP_VERSION`            |Version to install                                                             |`7.4`
 |`FPM_MAX_CHILDREN`       |Maximum number of child processes to be created                                |`100`
 |`FPM_START_SERVERS`      |Number of child processes created on startup                                   |`20`
 |`FPM_MIN_SPARE_SERVER`   |Minimum number of idle server processes                                        |`10`
