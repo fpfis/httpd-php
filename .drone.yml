@@ -80,7 +80,7 @@ pipeline:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
-      - docker build --build-arg php_version=${PHP_VERSION} --build-arg oci8_version=${OCI8_VERSION} -t ${TARGET}-local .
+      - docker build --build-arg php_version=${PHP_VERSION} --build-arg oci8_version=${OCI8_VERSION=2.0.12} -t ${TARGET}-local .
     when:
       event: pull_request
       branch: develop
@@ -96,6 +96,11 @@ pipeline:
       - PHP_MAX_EXECUTION_TIME=333
     commands:
       - php -i
+      - php -i | grep 'PHP_MEMORY_LIMIT => 1024M'
+      - php -i | grep 'PHP_UPLOAD_MAX_FILESIZE => 1024M'
+      - php -i | grep 'PHP_POST_MAX_SIZE => 1024M'
+      - php -i | grep 'PHP_MAX_INPUT_TIME => 333'
+      - php -i | grep 'PHP_MAX_EXECUTION_TIME => 333'
     when:
       event: pull_request
       branch: develop
