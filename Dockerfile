@@ -5,7 +5,7 @@ FROM golang as supervisord
 RUN go get -v github.com/ochinchina/supervisord
 
 ## Base PHP image :
-FROM ubuntu as httpd-php
+FROM ubuntu:18.04 as httpd-php
 
 # Build arguments
 ENV DEBIAN_FRONTEND=noninteractive
