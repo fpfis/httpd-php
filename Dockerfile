@@ -5,7 +5,7 @@ FROM golang as supervisord
 RUN go get -v github.com/ochinchina/supervisord
 
 ## Base PHP image :
-FROM ubuntu as httpd-php
+FROM ubuntu:18.04 as httpd-php
 
 # Build arguments
 ENV DEBIAN_FRONTEND=noninteractive
@@ -24,6 +24,8 @@ ENV php_version=${php_version} \
     PHP_MAX_EXECUTION_TIME=120 \
     PHP_MAX_INPUT_TIME=120 \
     PHP_MEMORY_LIMIT=512M \
+    PHP_UPLOAD_MAX_FILESIZE=200M \
+    PHP_POST_MAX_SIZE=220M \
     SITE_PATH=/ \
     SMTP_PORT=25 \
     SMTP_FROM=www-data@localhost \

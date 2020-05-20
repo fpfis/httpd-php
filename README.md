@@ -40,7 +40,9 @@ docker run -v $(pwd)/html:/var/www/html -e PHP_MEMORY_LIMIT=2G fpfis/httpd-php:5
 |`PHP_MAX_EXECUTION_TIME`    | PHP max execution time             | `30`              |
 |`PHP_MAX_INPUT_TIME`        | PHP max input time                 | `30`              |
 |`PHP_MEMORY_LIMIT`          | PHP memory limit                   | `512M`            |
-|`SMTP_SERVER`               | SMTP server to use                 | empty
+|`PHP_UPLOAD_MAX_FILESIZE`   | PHP upload max filesize            | `200M`            |
+|`PHP_POST_MAX_SIZE`         | PHP post max size                  | `220M`            |
+|`SMTP_SERVER`               | SMTP server to use                 | empty       
 |`SMTP_PORT  `               | SMTP port   to use                 | `25`
 |`SMTP_FROM`                 | SMTP From to use                   | empty
 |`SMTP_USERNAME`             | Username to use for SMTP auth      | empty

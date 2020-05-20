@@ -73,6 +73,7 @@ pipeline:
     when:
       event: pull_request
       branch: develop
+
   # Build and push release
   build-and-push-branch:
     image: plugins/docker
