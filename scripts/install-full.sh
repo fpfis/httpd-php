@@ -18,6 +18,9 @@ ln -s $(realpath ~/.composer/vendor/bin/drush) /usr/local/bin/drush
 chmod +x /usr/bin/composer
 drush @none dl registry_rebuild-7.x
 
+### Set max_allowed_packet to 1G on client side also
+sed -i 's/max_allowed_packet.*/max_allowed_packet = 1G/g' /etc/mysql/conf.d/mysqldump.cnf
+
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -rf /tmp/*
