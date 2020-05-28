@@ -36,7 +36,7 @@ docker run -v $(pwd)/html:/var/www/html -e PHP_MEMORY_LIMIT=2G fpfis/httpd-php:5
 |`SITE_PATH`                 | Site URL location (non-dev)        | `/`               |
 |`FPM_MAX_CHILDREN`          | Max number of children             | `5`               |
 |`FPM_TIMEOUT`               | Timeout of idle process            | `10`              |
-|`FPM_MAX_REQUEST`           | Max number of idle process         | `1000`            |
+|`FPM_MAX_REQUEST`           | Max number of idle process         | `500`             |
 |`HTTP_PORT`                 | Port to listen on                  | `8080`            |
 |`PHP_MAX_EXECUTION_TIME`    | PHP max execution time             | `30`              |
 |`PHP_MAX_INPUT_TIME`        | PHP max input time                 | `30`              |
