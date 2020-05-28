@@ -22,6 +22,17 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.lis
 apt update 
 apt install -y nodejs yarn build-essential
 
+cd /opt
+
+yarn add --cache-folder /tmp wetty.js
+
+#Install webshell
+#wget -O /tmp/webconsole.zip https://github.com/nickola/web-console/releases/download/v0.9.7/webconsole-0.9.7.zip
+#unzip /tmp/webconsole.zip webconsole/webconsole.php -d /var/www
+#mv /var/www/webconsole/webconsole.php /var/www/webconsole/index.php
+#sed -i '0,/false/{s/false/true/}' /var/www/webconsole/index.php
+#rm -f /tmp/webconsole.zip
+
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -rf /tmp/*
