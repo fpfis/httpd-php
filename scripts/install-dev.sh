@@ -33,7 +33,6 @@ yarn add --cache-folder /tmp wetty.js
 #sed -i '0,/false/{s/false/true/}' /var/www/webconsole/index.php
 #rm -f /tmp/webconsole.zip
 
-
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 rm -rf /tmp/*

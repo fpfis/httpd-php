@@ -17,7 +17,8 @@ ARG composer_version="1.9.3"
 # Default configuration and environment
 ENV php_version=${php_version} \
     FPM_MAX_CHILDREN=5 \
-    FPM_MIN_CHILDREN=1 \
+    FPM_TIMEOUT=10 \
+    FPM_MAX_REQUEST=500 \
     DAEMON_USER=www-data \
     DAEMON_GROUP=www-data \
     HTTP_PORT=8080 \
