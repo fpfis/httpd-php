@@ -1,3 +1,5 @@
+# REPO MOVED TO: https://git.fpfis.eu/fpfis/httpd-php
+
 # httpd-php
 
 This is the base repository used to build the various PHP images used in FPFIS's
